@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_search">Поиск</string>
+    <string name="watchlist">К просмотру</string>
+    <string name="menu_favourites">Любимые</string>
+    <string name="app_name">Movie Search</string>
+    <string name="action_settings">Настройки</string>
+    <string name="home_fragment_label">Главная</string>
+    <string name="search_fragment_label">Поиск</string>
+    <string name="fav_fragment_label">Любимые</string>
+    <string name="watchlist_fragment_label">К просмотру</string>
+    <string name="menu_home">Главная</string>
+    <string name="nav_header_title">Пользователь</string>
+    <string name="nav_header_subtitle">user@yandex.ru</string>
+</resources>
