@@ -12,4 +12,5 @@
     <string name="menu_home">Главная</string>
     <string name="nav_header_title">Пользователь</string>
     <string name="nav_header_subtitle">user@yandex.ru</string>
+    <string name="movie_description">Movie description</string>
 </resources>

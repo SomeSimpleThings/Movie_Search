@@ -3,44 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_list_item"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="@dimen/dim_150"
+    android:layout_height="@dimen/dim_200">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/movie_image"
             android:layout_width="@dimen/dim_100"
             android:layout_height="@dimen/dim_150"
             android:layout_marginStart="@dimen/dim_10"
-            android:layout_marginTop="@dimen/dim_10"
-            android:layout_marginBottom="@dimen/dim_10"
+            android:layout_marginTop="@dimen/dim_5"
+            android:layout_marginEnd="@dimen/dim_10"
+            android:background="@drawable/poster_default"
             android:contentDescription="@string/movie_description"
-            android:src="@drawable/poster_default"
+            android:src="@drawable/movie_card_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/movie_name"
-            style="@style/Theme.MovieSearch.MovieNameText"
-            android:layout_width="0dp"
+            style="@style/Theme.MovieSearch.MovieNameCardText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_image"
             tools:text="Film name is very very very big  aaknkknaln">
 
         </TextView>
 
         <TextView
             android:id="@+id/movie_year"
-            style="@style/Theme.MovieSearch.MovieText"
-            android:layout_width="0dp"
+            style="@style/Theme.MovieSearch.MovieNameCardText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_name"
             tools:text="2020" />
 
@@ -48,22 +48,19 @@
             android:id="@+id/movie_rating_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dim_10"
-            android:layout_marginTop="@dimen/dim_10"
-            android:layout_marginBottom="@dimen/dim_10"
             android:contentDescription="@string/movie_description"
+            style="@style/Theme.MovieSearch.MovieNameCardText"
             android:src="@drawable/ic_baseline_star_rate_24"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_year" />
+            app:layout_constraintStart_toEndOf="@+id/movie_year"
+            app:layout_constraintTop_toBottomOf="@+id/movie_name" />
 
         <TextView
             android:id="@+id/movie_rate"
-            style="@style/Theme.MovieSearch.MovieText"
-            android:layout_width="0dp"
+            style="@style/Theme.MovieSearch.MovieNameCardText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movie_rating_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_year"
+            app:layout_constraintTop_toBottomOf="@+id/movie_name"
             tools:text="8.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
