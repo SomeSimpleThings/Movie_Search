@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.ui.DummyContent
+import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
 
 class HomeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
 
     private lateinit var viewModel: HomeViewModel
 
@@ -20,7 +20,14 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        // Set the adapter
+        view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
+            it.layoutManager = GridLayoutManager(context, 3)
+            it.adapter =
+                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_cardview_item)
+        }
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

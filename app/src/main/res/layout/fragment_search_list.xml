@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchFragment">
 
-    <include layout="@layout/movie_recycler_view" />
+    <include
+        android:id="@+id/recycler_view"
+        layout="@layout/movie_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

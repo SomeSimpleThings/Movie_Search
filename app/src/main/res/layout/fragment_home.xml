@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <include layout="@layout/movie_recycler_view_grid" />
+    <include
+        android:id="@+id/recycler_view"
+        layout="@layout/movie_recycler_view_grid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

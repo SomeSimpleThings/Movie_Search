@@ -5,8 +5,6 @@
     android:id="@+id/recycler_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/dim_10"
-    android:layout_marginRight="@dimen/dim_10"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
     app:spanCount="3"
     tools:itemCount="20"

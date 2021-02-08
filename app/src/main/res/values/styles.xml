@@ -14,6 +14,8 @@
         <item name="android:textSize">@dimen/sp_15</item>
         <item name="android:maxLines">1</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginStart">@dimen/dim_5</item>
+        <item name="android:layout_marginEnd">@dimen/dim_5</item>
         <item name="android:layout_marginTop">@dimen/dim_0</item>
         <item name="android:ellipsize">end</item>
     </style>

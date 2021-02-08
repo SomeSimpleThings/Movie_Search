@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.ui.watchlist.dummy.DummyContent
+import com.geekbrains.moviesearch.ui.DummyContent
+import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
 
 /**
  * A fragment representing a list of Items.
@@ -30,17 +31,13 @@ class WatchlistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.movie_list_item, container, false)
+        val view = inflater.inflate(R.layout.fragment_watchlist, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyWatchlistRecyclerViewAdapter(DummyContent.ITEMS)
-            }
+        view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
+            it.layoutManager = LinearLayoutManager(context)
+            it.adapter =
+                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_list_item)
         }
         return view
     }
