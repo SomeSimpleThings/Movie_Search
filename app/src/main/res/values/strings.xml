@@ -64,4 +64,5 @@
     <string name="movie_description">Movie description</string>
     <string name="enter_movie_name_hint">Enter movie name</string>
     <string name="about">About</string>
+    <string name="action_share">Share</string>
 </resources>

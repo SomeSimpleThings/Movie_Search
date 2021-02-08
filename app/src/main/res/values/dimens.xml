@@ -19,5 +19,7 @@
     <dimen name="dim_0">0dp</dimen>
     <dimen name="dim_2">2dp</dimen>
     <dimen name="dim_15">15dp</dimen>
+    <dimen name="movie_detail_app_bar_height">278dp</dimen>
+    <dimen name="toolbar_elevation">5dp</dimen>
 
 </resources>
