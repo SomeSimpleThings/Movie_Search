@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.geekbrains.moviesearch.ui.home.HomeFragment"
-        android:label="@string/home_fragment_label"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_detailsFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/nav_search"
         android:name="com.geekbrains.moviesearch.ui.search.SearchFragment"
-        android:label="@string/search_fragment_label"
+        android:label="@string/search"
         tools:layout="@layout/fragment_search_list">
         <action
             android:id="@+id/action_nav_search_to_detailsFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/nav_favourites"
         android:name="com.geekbrains.moviesearch.ui.favourites.FavouritesFragment"
-        android:label="@string/fav_fragment_label"
+        android:label="@string/favourites"
         tools:layout="@layout/fragment_favourites">
         <action
             android:id="@+id/action_nav_favourites_to_detailsFragment"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.geekbrains.moviesearch.ui.DetailsFragment"
-        android:label="fragment_details"
+        android:label="@string/about"
         tools:layout="@layout/fragment_details" />
     <activity
         android:id="@+id/settingsActivity"

@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_baseline_local_movies_24"
-            android:title="@string/menu_home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_baseline_search_24"
-            android:title="@string/menu_search" />
+            android:title="@string/search" />
         <item
             android:id="@+id/nav_watchlist"
             android:icon="@drawable/ic_baseline_featured_play_list_24"
@@ -19,7 +19,7 @@
         <item
             android:id="@+id/nav_favourites"
             android:icon="@drawable/ic_baseline_favorite_24"
-            android:title="@string/menu_favourites" />
+            android:title="@string/favourites" />
 
     </group>
 </menu>

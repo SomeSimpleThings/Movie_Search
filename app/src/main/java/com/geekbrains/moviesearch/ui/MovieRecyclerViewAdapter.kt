@@ -1,17 +1,17 @@
 package com.geekbrains.moviesearch.ui
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
-
-import com.geekbrains.moviesearch.ui.DummyContent.DummyItem
+import com.geekbrains.moviesearch.vo.Movie
 
 class MovieRecyclerViewAdapter(
-    private val values: List<DummyItem>,
-    val layoutId: Int
+    private val values: List<Movie>,
+    val layoutId: Int,
+    val itemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,12 +22,15 @@ class MovieRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.yearView.text = "2020"
-        holder.nameView.text = item.content
-        holder.rateView.text = "8.2"
+        holder.bind(item)
     }
 
+
     override fun getItemCount(): Int = values.size
+    fun deleteItem(adapterPosition: Int) {
+        values.drop(adapterPosition)
+        notifyItemRemoved(adapterPosition)
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val yearView: TextView = view.findViewById(R.id.movie_year)
@@ -37,5 +40,22 @@ class MovieRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + nameView.text + "'"
         }
+
+        fun bind(item: Movie) = with(item) {
+            yearView.text = year
+            nameView.text = name
+            rateView.text = rating
+            itemView.setOnClickListener {
+                itemClickListener.onItemClicked(this)
+            }
+        }
     }
+}
+
+interface OnItemClickListener {
+    fun onItemClicked(responce: Movie?)
+}
+
+interface OnItemRemovedListener {
+    fun onItemRemoved(responce: Movie?)
 }

@@ -6,13 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.ui.DummyContent
 import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
+import com.geekbrains.moviesearch.ui.OnItemClickListener
+import com.geekbrains.moviesearch.vo.Movie
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnItemClickListener {
 
     private lateinit var viewModel: HomeViewModel
 
@@ -25,7 +28,7 @@ class HomeFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
             it.layoutManager = GridLayoutManager(context, 3)
             it.adapter =
-                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_cardview_item)
+                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_cardview_item, this)
         }
         return view
     }
@@ -35,4 +38,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
+    override fun onItemClicked(responce: Movie?) {
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_detailsFragment)
+    }
 }

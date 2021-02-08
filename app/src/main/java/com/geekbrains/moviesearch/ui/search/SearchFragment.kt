@@ -8,14 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.ui.DummyContent
 import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
+import com.geekbrains.moviesearch.ui.OnItemClickListener
+import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
+import com.geekbrains.moviesearch.vo.Movie
 
 /**
  * A fragment representing a list of Items.
  */
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 1
 
@@ -35,7 +40,11 @@ class SearchFragment : Fragment() {
 
         view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_list_item)
+            val adapter =
+                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_list_item, this)
+            it.adapter = adapter
+            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+            itemTouchHelper.attachToRecyclerView(it)
         }
 
         return view
@@ -54,5 +63,9 @@ class SearchFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    override fun onItemClicked(responce: Movie?) {
+        NavHostFragment.findNavController(this).navigate(R.id.action_nav_search_to_detailsFragment)
     }
 }

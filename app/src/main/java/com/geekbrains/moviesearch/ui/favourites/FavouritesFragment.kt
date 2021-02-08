@@ -1,21 +1,26 @@
 package com.geekbrains.moviesearch.ui.favourites
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.ui.DummyContent
 import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
+import com.geekbrains.moviesearch.ui.OnItemClickListener
+import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
+import com.geekbrains.moviesearch.vo.Movie
 
 /**
  * A fragment representing a list of Items.
  */
-class FavouritesFragment : Fragment() {
+class FavouritesFragment : Fragment(), OnItemClickListener {
 
     private var columnCount = 1
 
@@ -36,8 +41,15 @@ class FavouritesFragment : Fragment() {
         // Set the adapter
         view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
             it.layoutManager = GridLayoutManager(context, 3)
-            it.adapter =
-                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_cardview_item)
+            val adapter =
+                MovieRecyclerViewAdapter(
+                    DummyContent.ITEMS,
+                    R.layout.movie_cardview_item,
+                    this
+                )
+            it.adapter = adapter
+            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+            itemTouchHelper.attachToRecyclerView(it)
         }
         return view
     }
@@ -55,5 +67,11 @@ class FavouritesFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    override fun onItemClicked(responce: Movie?) {
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_nav_favourites_to_detailsFragment)
+
     }
 }
