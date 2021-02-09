@@ -3,26 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.geekbrains.moviesearch.ui.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/nav_home"
+        android:name="com.geekbrains.moviesearch.ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_nav_home_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.geekbrains.moviesearch.ui.search.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search_list">
+        <action
+            android:id="@+id/action_nav_search_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_favourites"
+        android:name="com.geekbrains.moviesearch.ui.favourites.FavouritesFragment"
+        android:label="@string/favourites"
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_nav_favourites_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_watchlist"
+        android:name="com.geekbrains.moviesearch.ui.watchlist.WatchlistFragment"
+        android:label="@string/watchlist"
+        tools:layout="@layout/fragment_watchlist">
+        <action
+            android:id="@+id/action_nav_watchlist_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.geekbrains.moviesearch.ui.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/detailsFragment"
+        android:name="com.geekbrains.moviesearch.ui.DetailsFragment"
+        android:label="@string/about"
+        tools:layout="@layout/fragment_details" />
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.geekbrains.moviesearch.ui.settings.SettingsActivity"
+        android:label="SettingsActivity" />
 </navigation>

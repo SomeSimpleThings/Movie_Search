@@ -1,7 +1,9 @@
 package com.geekbrains.moviesearch.vo
 
-data class Movie(val id: Int, val name: String) {
-    override fun toString(): String = "$id $name"
+import java.time.Year
+
+data class Movie(val id: Int, val name: String, val year: String, val rating: String) {
+
 }
 
 object MovieCopier {
