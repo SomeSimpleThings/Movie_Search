@@ -9,10 +9,11 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.vo.Movie
 
 class MovieRecyclerViewAdapter(
-    private val values: List<Movie>,
     val layoutId: Int,
     val itemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder>() {
+
+    private var values: List<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -30,6 +31,11 @@ class MovieRecyclerViewAdapter(
     fun deleteItem(adapterPosition: Int) {
         values.drop(adapterPosition)
         notifyItemRemoved(adapterPosition)
+    }
+
+    fun setMovies(movies: List<Movie>) {
+        values = movies
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -52,10 +58,11 @@ class MovieRecyclerViewAdapter(
     }
 }
 
+
 interface OnItemClickListener {
-    fun onItemClicked(responce: Movie?)
+    fun onItemClicked(movie: Movie?)
 }
 
 interface OnItemRemovedListener {
-    fun onItemRemoved(responce: Movie?)
+    fun onItemRemoved(movie: Movie?)
 }

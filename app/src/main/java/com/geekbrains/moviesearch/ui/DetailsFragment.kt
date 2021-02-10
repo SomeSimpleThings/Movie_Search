@@ -3,15 +3,17 @@ package com.geekbrains.moviesearch.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.model.MainViewModel
+import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +30,14 @@ class DetailsFragment : Fragment() {
         toolbar_details.setNavigationOnClickListener { v ->
             v.findNavController().navigateUp()
         }
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.getSelectedMovie().observe(viewLifecycleOwner, {
+            renderMovieInfo(it)
+        })
+    }
+
+    private fun renderMovieInfo(movie: Movie) {
+        fragment_toolbarLayout.title = movie.name
     }
 
     override fun onResume() {
