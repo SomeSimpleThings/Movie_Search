@@ -5,6 +5,7 @@ data class Movie(
     val name: String,
     val year: String,
     val rating: String,
+    val description: String?,
     var favourite: Boolean = false,
     var inWatchList: Boolean = false
 ) {

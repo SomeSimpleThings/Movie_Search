@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
-import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
 import com.geekbrains.moviesearch.vo.Movie
 
 
@@ -25,11 +27,15 @@ class HomeFragment : BaseRecyclerFragment() {
 
     }
 
-    override fun recyclerAdapterProvider(): MovieRecyclerViewAdapter =
-        MovieRecyclerViewAdapter(R.layout.movie_cardview_item, this)
+    override fun viewModel(): MainViewModel =
+        ViewModelProvider(this).get(MainViewModel::class.java)
+
+    override fun recyclerItemLayoutId(): Int = R.layout.movie_cardview_item
 
     override fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager =
         GridLayoutManager(context, 3)
+
+    override fun movieListFilter(): MovieListFilter = MovieListFilter.All
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

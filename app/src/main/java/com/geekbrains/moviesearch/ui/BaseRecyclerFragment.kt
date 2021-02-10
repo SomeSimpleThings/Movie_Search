@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
+import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.vo.Movie
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
-abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener {
+abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener, OnFavClickListener,
+    OnWatchClickListener {
 
     protected lateinit var adapter: MovieRecyclerViewAdapter
     protected lateinit var viewModel: MainViewModel
@@ -35,14 +32,21 @@ abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View
 
-    abstract fun recyclerAdapterProvider(): MovieRecyclerViewAdapter
-
+    abstract fun viewModel(): MainViewModel
+    abstract fun recyclerItemLayoutId(): Int
     abstract fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager
+    abstract fun movieListFilter(): MovieListFilter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        adapter = recyclerAdapterProvider()
+        viewModel = viewModel()
+        adapter = MovieRecyclerViewAdapter(
+            recyclerItemLayoutId(),
+            this,
+            this,
+            this
+        )
+
         recycler_view?.let {
             it as RecyclerView
             it.layoutManager = recyclerLayoutManagerProvider()
@@ -67,6 +71,14 @@ abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener {
                 loadingLayout?.visibility = View.GONE
             }
         }
+    }
+
+    override fun onFavClicked(movie: Movie) {
+        viewModel.processFavClick(movie)
+    }
+
+    override fun onWatchClicked(movie: Movie) {
+        viewModel.processWatchClick(movie)
     }
 
     override fun onItemClicked(movie: Movie?) {

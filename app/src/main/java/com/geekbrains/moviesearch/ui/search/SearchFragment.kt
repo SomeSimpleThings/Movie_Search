@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
-import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
 import com.geekbrains.moviesearch.ui.OnItemClickListener
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
@@ -31,11 +32,15 @@ class SearchFragment : BaseRecyclerFragment(), OnItemClickListener {
         return inflater.inflate(R.layout.fragment_search_list, parent, false)
     }
 
-    override fun recyclerAdapterProvider(): MovieRecyclerViewAdapter =
-        MovieRecyclerViewAdapter(R.layout.movie_list_item, this)
+    override fun viewModel(): MainViewModel =
+        ViewModelProvider(this).get(MainViewModel::class.java)
+
+    override fun recyclerItemLayoutId(): Int = R.layout.movie_list_item
 
     override fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager =
         LinearLayoutManager(context)
+
+    override fun movieListFilter(): MovieListFilter = MovieListFilter.All
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

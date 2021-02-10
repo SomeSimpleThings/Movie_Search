@@ -38,6 +38,9 @@ class DetailsFragment : Fragment() {
 
     private fun renderMovieInfo(movie: Movie) {
         fragment_toolbarLayout.title = movie.name
+        movie_year.text = movie.year
+        movie_rate.text = movie.rating
+        movie_desc.text = movie.description
     }
 
     override fun onResume() {
