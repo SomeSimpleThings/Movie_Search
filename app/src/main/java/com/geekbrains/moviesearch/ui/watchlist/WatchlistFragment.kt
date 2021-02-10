@@ -14,13 +14,12 @@ import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.model.WatchListViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
-import com.geekbrains.moviesearch.ui.OnItemClickListener
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_watchlist.*
 
 
-class WatchlistFragment : BaseRecyclerFragment(), OnItemClickListener {
+class WatchlistFragment : BaseRecyclerFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +49,12 @@ class WatchlistFragment : BaseRecyclerFragment(), OnItemClickListener {
     override fun movieListFilter(): MovieListFilter = MovieListFilter.Watchlist
 
 
-    override fun onItemClicked(movie: Movie?) {
-        super.onItemClicked(movie)
-        NavHostFragment.findNavController(this)
-            .navigate(R.id.action_nav_watchlist_to_detailsFragment)
+    override fun onItemClicked(movie: Movie) {
+        Bundle().let {
+            it.putInt("movieKey", movie.id)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_watchlist_to_detailsFragment, it)
+        }
 
     }
 }

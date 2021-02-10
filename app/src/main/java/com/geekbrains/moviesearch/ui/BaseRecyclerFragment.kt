@@ -13,11 +13,10 @@ import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_home.*
 
-abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener, OnFavClickListener,
-    OnWatchClickListener {
+abstract class BaseRecyclerFragment : Fragment(), OnRecyclerItemClickListener {
 
     protected lateinit var adapter: MovieRecyclerViewAdapter
-    protected lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +42,6 @@ abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener, OnFavClic
         adapter = MovieRecyclerViewAdapter(
             recyclerItemLayoutId(),
             this,
-            this,
-            this
         )
 
         recycler_view?.let {
@@ -73,15 +70,7 @@ abstract class BaseRecyclerFragment : Fragment(), OnItemClickListener, OnFavClic
         }
     }
 
-    override fun onFavClicked(movie: Movie) {
-        viewModel.processFavClick(movie)
-    }
-
-    override fun onWatchClicked(movie: Movie) {
-        viewModel.processWatchClick(movie)
-    }
-
-    override fun onItemClicked(movie: Movie?) {
-        viewModel.selectMovie(movie)
+    override fun onItemIconsClicked(movie: Movie) {
+        viewModel.updateMovie(movie)
     }
 }

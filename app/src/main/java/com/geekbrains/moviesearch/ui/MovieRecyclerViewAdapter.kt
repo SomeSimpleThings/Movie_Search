@@ -11,9 +11,7 @@ import com.geekbrains.moviesearch.vo.Movie
 
 class MovieRecyclerViewAdapter(
     val layoutId: Int,
-    val itemClickListener: OnItemClickListener,
-    val favClickListener: OnFavClickListener,
-    val watchClickListener: OnWatchClickListener
+    val itemClickListener: OnRecyclerItemClickListener,
 ) : RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder>() {
 
     private var values: List<Movie> = mutableListOf()
@@ -56,49 +54,29 @@ class MovieRecyclerViewAdapter(
             yearView.text = year
             nameView.text = name
             rateView.text = rating
-            favImageView.let { imageView ->
-                imageView.setImageResource(getFavDravable(favourite))
-                imageView.setOnClickListener {
-                    favourite = !favourite
-                    favClickListener.onFavClicked(this)
-                }
+            favImageView.setImageResource(getFavDravableResource(favourite))
+            favImageView.setOnClickListener {
+                favourite = !favourite
+                itemClickListener.onItemIconsClicked(this)
             }
 
-            watchImage.let { imageView ->
-                imageView.setImageResource(getWatchlistDravable(inWatchList))
-                imageView.setOnClickListener {
-                    inWatchList = !inWatchList
-                    watchClickListener.onWatchClicked(this)
-                }
-                itemView.setOnClickListener {
-                    itemClickListener.onItemClicked(this)
-                }
+            watchImage.setImageResource(getWatchlistDravableResource(inWatchList))
+            watchImage.setOnClickListener {
+                inWatchList = !inWatchList
+                itemClickListener.onItemIconsClicked(this)
+            }
+            itemView.setOnClickListener {
+                itemClickListener.onItemClicked(this)
             }
         }
+
     }
 }
 
-fun getFavDravable(fav: Boolean) = when (fav) {
-    true -> R.drawable.ic_baseline_favorite_24
-    false -> R.drawable.ic_baseline_favorite_border_24
-}
 
-fun getWatchlistDravable(watch: Boolean) = when (watch) {
-    true -> R.drawable.ic_baseline_playlist_add_check_24
-    false -> R.drawable.ic_baseline_playlist_add_24
-}
-
-
-interface OnItemClickListener {
-    fun onItemClicked(movie: Movie?)
-}
-
-interface OnFavClickListener {
-    fun onFavClicked(movie: Movie)
-}
-
-interface OnWatchClickListener {
-    fun onWatchClicked(movie: Movie)
+interface OnRecyclerItemClickListener {
+    fun onItemClicked(movie: Movie)
+    fun onItemIconsClicked(movie: Movie)
 }
 
 interface OnItemRemovedListener {

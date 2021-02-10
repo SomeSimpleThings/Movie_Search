@@ -4,35 +4,26 @@ import com.geekbrains.moviesearch.vo.Movie
 
 interface Repository {
 
-    fun getMovies(movieListFilter: MovieListFilter = MovieListFilter.All): MutableList<Movie>
+    fun getMovies(movieListFilter: MovieListFilter = MovieListFilter.All): List<Movie>
 
-    fun getMovieById(id: Int): Movie?
+    fun getMovieById(id: Int?): Movie?
+
 }
 
 class LocalRepositoryImpl : Repository {
-    override fun getMovies(movieListFilter: MovieListFilter): MutableList<Movie> {
+    override fun getMovies(movieListFilter: MovieListFilter): List<Movie> {
         return movieListFilter.list
     }
 
-    override fun getMovieById(id: Int): Movie? {
+    override fun getMovieById(id: Int?): Movie? {
         return DummyContent.getById(id)
     }
 
-    fun addToFavourites(movie: Movie) {
-        DummyContent.FAVOURITES_ITEMS.add(movie)
+    fun update(movie: Movie) {
+        DummyContent.update()
     }
 
-    fun removeFromFavourites(movie: Movie) {
-        DummyContent.FAVOURITES_ITEMS.remove(movie)
-    }
 
-    fun addToWatchList(movie: Movie) {
-        DummyContent.WATCH_ITEMS.add(movie)
-    }
-
-    fun removeFromWatchlist(movie: Movie) {
-        DummyContent.WATCH_ITEMS.remove(movie)
-    }
 }
 
 sealed class MovieListFilter {
@@ -41,7 +32,7 @@ sealed class MovieListFilter {
     object Watchlist : MovieListFilter()
 
 
-    val list: MutableList<Movie>
+    val list: List<Movie>
         get() {
             return when (this) {
                 is All -> DummyContent.REMOTE_ITEMS

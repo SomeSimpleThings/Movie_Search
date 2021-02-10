@@ -41,8 +41,12 @@ class HomeFragment : BaseRecyclerFragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onItemClicked(movie: Movie?) {
-        super.onItemClicked(movie)
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_home_to_detailsFragment)
+    override fun onItemClicked(movie: Movie) {
+        Bundle().let {
+            it.putInt("movieKey", movie.id)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_home_to_detailsFragment, it)
+        }
+
     }
 }

@@ -29,29 +29,23 @@ open class MainViewModel(
         }.start()
     }
 
-    fun selectMovie(movie: Movie?) {
-        selectedMovieLiveData.postValue(movie)
+
+    fun getById(id: Int?): MutableLiveData<Movie> {
+        selectedMovieLiveData.postValue(repository.getMovieById(id))
+        return selectedMovieLiveData
     }
 
-    fun getSelectedMovie() = selectedMovieLiveData
-
-    fun processFavClick(movie: Movie) {
-        repository.getMovies(MovieListFilter.Favourites).let {
-            when (movie.favourite) {
-                true -> it.add(movie)
-                else -> it.remove(movie)
-            }
+    fun updateMovie(movie: Movie) {
+        (repository as LocalRepositoryImpl).let {
+            repository.update(movie)
         }
         loadingImitation()
     }
 
-    fun processWatchClick(movie: Movie) {
-        repository.getMovies(MovieListFilter.Watchlist).let {
-            when (movie.inWatchList) {
-                true -> it.add(movie)
-                false -> it.remove(movie)
-            }
+    fun singleUpdateMovie(movie: Movie) {
+        (repository as LocalRepositoryImpl).let {
+            repository.update(movie)
+            selectedMovieLiveData.postValue(repository.getMovieById(movie.id))
         }
-        loadingImitation()
     }
 }

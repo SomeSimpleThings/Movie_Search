@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
+    private var movie: Movie? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +31,18 @@ class DetailsFragment : Fragment() {
         toolbar_details.setNavigationOnClickListener { v ->
             v.findNavController().navigateUp()
         }
+        val key = arguments?.getInt("movieKey")
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getSelectedMovie().observe(viewLifecycleOwner, {
+        viewModel.getById(key).observe(viewLifecycleOwner, {
+            movie = it
             renderMovieInfo(it)
         })
+        details_fab.setOnClickListener {
+            movie?.let {
+                it.favourite = !it.favourite
+                viewModel.singleUpdateMovie(it)
+            }
+        }
     }
 
     private fun renderMovieInfo(movie: Movie) {
@@ -41,6 +50,7 @@ class DetailsFragment : Fragment() {
         movie_year.text = movie.year
         movie_rate.text = movie.rating
         movie_desc.text = movie.description
+        details_fab.setImageResource(getFavDravableResource(movie.favourite))
     }
 
     override fun onResume() {

@@ -7,8 +7,8 @@ import java.util.ArrayList
 object DummyContent {
 
     val REMOTE_ITEMS: MutableList<Movie> = ArrayList()
-    val FAVOURITES_ITEMS: MutableList<Movie> = ArrayList()
-    val WATCH_ITEMS: MutableList<Movie> = ArrayList()
+    var FAVOURITES_ITEMS: List<Movie> = REMOTE_ITEMS.filter { it.favourite }
+    var WATCH_ITEMS: List<Movie> = REMOTE_ITEMS.filter { it.inWatchList }
     private const val COUNT = 25
 
     init {
@@ -25,7 +25,11 @@ object DummyContent {
         return Movie(position, movieNames.random(), years.random(), ratings.random(), largeDesc)
     }
 
-    fun getById(id: Int): Movie? = REMOTE_ITEMS.firstOrNull { it.id == id }
+    fun getById(id: Int?): Movie? = REMOTE_ITEMS.firstOrNull { it.id == id }
+    fun update() {
+        FAVOURITES_ITEMS = REMOTE_ITEMS.filter { it.favourite }
+        WATCH_ITEMS = REMOTE_ITEMS.filter { it.inWatchList }
+    }
 }
 
 val movieNames =

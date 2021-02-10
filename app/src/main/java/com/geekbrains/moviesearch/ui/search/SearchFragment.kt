@@ -13,12 +13,11 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
-import com.geekbrains.moviesearch.ui.OnItemClickListener
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
-class SearchFragment : BaseRecyclerFragment(), OnItemClickListener {
+class SearchFragment : BaseRecyclerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +47,11 @@ class SearchFragment : BaseRecyclerFragment(), OnItemClickListener {
         itemTouchHelper.attachToRecyclerView(recycler_view as RecyclerView)
     }
 
-    override fun onItemClicked(movie: Movie?) {
-        super.onItemClicked(movie)
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_search_to_detailsFragment)
+    override fun onItemClicked(movie: Movie) {
+        Bundle().let {
+            it.putInt("movieKey", movie.id)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_search_to_detailsFragment, it)
+        }
     }
 }
