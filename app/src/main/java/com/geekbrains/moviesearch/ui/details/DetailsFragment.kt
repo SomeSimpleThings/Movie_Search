@@ -1,4 +1,4 @@
-package com.geekbrains.moviesearch.ui
+package com.geekbrains.moviesearch.ui.details
 
 import android.os.Bundle
 import android.view.*
@@ -7,13 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.model.MainViewModel
+import com.geekbrains.moviesearch.ui.getFavDravableResource
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: DetailsViewModel
     private var movie: Movie? = null
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class DetailsFragment : Fragment() {
             v.findNavController().navigateUp()
         }
         val key = arguments?.getInt("movieKey")
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         viewModel.getById(key).observe(viewLifecycleOwner, {
             movie = it
             renderMovieInfo(it)

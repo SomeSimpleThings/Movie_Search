@@ -1,7 +1,8 @@
-package com.geekbrains.moviesearch.model
+package com.geekbrains.moviesearch.ui.favourites
 
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.ui.MainViewModel
 
 class FavouritesViewModel : MainViewModel() {
 

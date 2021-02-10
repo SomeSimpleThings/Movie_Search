@@ -1,4 +1,4 @@
-package com.geekbrains.moviesearch.model
+package com.geekbrains.moviesearch.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,6 @@ import java.lang.Thread.sleep
 
 open class MainViewModel(
     protected val responceLiveData: MutableLiveData<LoadingState> = MutableLiveData(),
-    protected val selectedMovieLiveData: MutableLiveData<Movie> = MutableLiveData(),
     protected val repository: Repository = LocalRepositoryImpl()
 ) :
     ViewModel() {
@@ -29,23 +28,10 @@ open class MainViewModel(
         }.start()
     }
 
-
-    fun getById(id: Int?): MutableLiveData<Movie> {
-        selectedMovieLiveData.postValue(repository.getMovieById(id))
-        return selectedMovieLiveData
-    }
-
     fun updateMovie(movie: Movie) {
         (repository as LocalRepositoryImpl).let {
             repository.update(movie)
         }
         loadingImitation()
-    }
-
-    fun singleUpdateMovie(movie: Movie) {
-        (repository as LocalRepositoryImpl).let {
-            repository.update(movie)
-            selectedMovieLiveData.postValue(repository.getMovieById(movie.id))
-        }
     }
 }

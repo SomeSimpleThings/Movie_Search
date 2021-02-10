@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.geekbrains.moviesearch.ui.DetailsFragment"
+        android:name="com.geekbrains.moviesearch.ui.details.DetailsFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_details" />
 

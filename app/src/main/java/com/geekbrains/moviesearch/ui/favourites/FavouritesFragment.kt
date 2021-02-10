@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.MovieListFilter
-import com.geekbrains.moviesearch.model.FavouritesViewModel
-import com.geekbrains.moviesearch.model.MainViewModel
+import com.geekbrains.moviesearch.ui.MainViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
 import com.geekbrains.moviesearch.vo.Movie
 

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
-import com.geekbrains.moviesearch.model.MainViewModel
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_home.*
 

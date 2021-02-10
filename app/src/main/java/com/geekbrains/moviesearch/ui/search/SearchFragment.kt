@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.MovieListFilter
-import com.geekbrains.moviesearch.model.MainViewModel
+import com.geekbrains.moviesearch.ui.MainViewModel
 import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
