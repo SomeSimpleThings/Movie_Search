@@ -10,9 +10,14 @@
         android:name="com.geekbrains.moviesearch.ui.home.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
+        <argument
+            android:name="movieKey"
+            app:argType="integer" />
         <action
             android:id="@+id/action_nav_home_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -20,9 +25,14 @@
         android:name="com.geekbrains.moviesearch.ui.search.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search_list">
+        <argument
+            android:name="movieKey"
+            app:argType="integer" />
         <action
             android:id="@+id/action_nav_search_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -30,9 +40,14 @@
         android:name="com.geekbrains.moviesearch.ui.favourites.FavouritesFragment"
         android:label="@string/favourites"
         tools:layout="@layout/fragment_favourites">
+        <argument
+            android:name="movieKey"
+            app:argType="integer" />
         <action
             android:id="@+id/action_nav_favourites_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -40,15 +55,21 @@
         android:name="com.geekbrains.moviesearch.ui.watchlist.WatchlistFragment"
         android:label="@string/watchlist"
         tools:layout="@layout/fragment_watchlist">
+        <argument
+            android:name="movieKey"
+            app:argType="integer" />
         <action
             android:id="@+id/action_nav_watchlist_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.geekbrains.moviesearch.ui.DetailsFragment"
+        android:name="com.geekbrains.moviesearch.ui.details.DetailsFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_details" />
+
     <activity
         android:id="@+id/settingsActivity"
         android:name="com.geekbrains.moviesearch.ui.settings.SettingsActivity"

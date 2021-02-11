@@ -1,71 +1,57 @@
 package com.geekbrains.moviesearch.ui.search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.ui.DummyContent
-import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
-import com.geekbrains.moviesearch.ui.OnItemClickListener
+import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.ui.MainViewModel
+import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
+import kotlinx.android.synthetic.main.fragment_search_list.*
 
-/**
- * A fragment representing a list of Items.
- */
-class SearchFragment : Fragment(), OnItemClickListener {
-
-    private var columnCount = 1
+class SearchFragment : BaseRecyclerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun fragmentViewProvider(
+        inflater: LayoutInflater,
+        parent: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_search_list, container, false)
+    ): View {
+        return inflater.inflate(R.layout.fragment_search_list, parent, false)
+    }
 
-        view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
-            it.layoutManager = LinearLayoutManager(context)
-            val adapter =
-                MovieRecyclerViewAdapter(DummyContent.ITEMS, R.layout.movie_list_item, this)
-            it.adapter = adapter
-            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
-            itemTouchHelper.attachToRecyclerView(it)
+    override fun viewModel(): MainViewModel =
+        ViewModelProvider(this).get(MainViewModel::class.java)
+
+    override fun recyclerItemLayoutId(): Int = R.layout.movie_list_item
+
+    override fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager =
+        LinearLayoutManager(context)
+
+    override fun movieListFilter(): MovieListFilter = MovieListFilter.All
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+        itemTouchHelper.attachToRecyclerView(recycler_view as RecyclerView)
+    }
+
+    override fun onItemClicked(movie: Movie) {
+        Bundle().let {
+            it.putInt("movieKey", movie.id)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_search_to_detailsFragment, it)
         }
-
-        return view
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
-
-    override fun onItemClicked(responce: Movie?) {
-        NavHostFragment.findNavController(this).navigate(R.id.action_nav_search_to_detailsFragment)
     }
 }

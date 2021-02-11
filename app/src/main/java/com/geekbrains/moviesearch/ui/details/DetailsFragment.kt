@@ -1,17 +1,20 @@
-package com.geekbrains.moviesearch.ui
+package com.geekbrains.moviesearch.ui.details
 
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.ui.getFavDravableResource
+import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
+    private lateinit var viewModel: DetailsViewModel
+    private var movie: Movie? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +31,26 @@ class DetailsFragment : Fragment() {
         toolbar_details.setNavigationOnClickListener { v ->
             v.findNavController().navigateUp()
         }
+        val key = arguments?.getInt("movieKey")
+        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
+        viewModel.getById(key).observe(viewLifecycleOwner, {
+            movie = it
+            renderMovieInfo(it)
+        })
+        details_fab.setOnClickListener {
+            movie?.let {
+                it.favourite = !it.favourite
+                viewModel.singleUpdateMovie(it)
+            }
+        }
+    }
+
+    private fun renderMovieInfo(movie: Movie) {
+        fragment_toolbarLayout.title = movie.name
+        movie_year.text = movie.year
+        movie_rate.text = movie.rating
+        movie_desc.text = movie.description
+        details_fab.setImageResource(getFavDravableResource(movie.favourite))
     }
 
     override fun onResume() {
