@@ -14,4 +14,7 @@
     <string name="action_share">Поделиться</string>
     <string name="category">Категория</string>
     <string name="categories">Категории</string>
+    <string name="appearence">Внешний вид</string>
+    <string name="prefs_switch_dark_summary">Переключиться на темную тему</string>
+    <string name="prefs_switch_dark_title">Тема приложения</string>
 </resources>
