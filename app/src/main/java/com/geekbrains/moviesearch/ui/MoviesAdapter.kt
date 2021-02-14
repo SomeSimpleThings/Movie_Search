@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.vo.Movie
 
-class MovieRecyclerViewAdapter(
+class MoviesAdapter(
     private val layoutId: Int,
     private val itemClickListener: OnMovieItemClickListener,
-) : RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var values: List<Movie> = mutableListOf()
 

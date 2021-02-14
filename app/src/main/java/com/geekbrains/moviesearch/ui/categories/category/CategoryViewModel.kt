@@ -4,7 +4,7 @@ import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.ui.MainViewModel
 
 class CategoryViewModel(
-    private var currentCategoryId: Int? = null
+    private var currentCategoryId: Int = -1
 ) : MainViewModel() {
 
     override fun loadingImitation() {
@@ -12,18 +12,18 @@ class CategoryViewModel(
             Thread.sleep(1000)
             responceLiveData.postValue(
                 when (currentCategoryId) {
-                    null -> LoadingState.Loading
-                    else -> LoadingState.SuccessCategoryLoad(
-                        repository.getCategoryById(
-                            currentCategoryId!!
+                    -1 -> LoadingState.Loading
+                    else -> {
+                        LoadingState.SuccessCategoryLoad(
+                            repository.getCategoryById(currentCategoryId)
                         )
-                    )
+                    }
                 }
             )
         }.start()
     }
 
-    fun postSelectedCategoryId(id: Int?) {
+    fun postSelectedCategoryId(id: Int) {
         currentCategoryId = id
         loadingImitation()
     }

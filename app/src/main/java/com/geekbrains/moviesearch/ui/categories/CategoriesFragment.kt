@@ -13,7 +13,6 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.vo.Category
-import com.geekbrains.moviesearch.vo.Movie
 
 
 class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
@@ -40,29 +39,12 @@ class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
         CategoryAdapter(this, this)
                 as RecyclerView.Adapter<RecyclerView.ViewHolder>
 
-
-    override fun showState(state: LoadingState) {
-        val loadingLayout =
-            activity?.findViewById<View>(R.id.mainFragmentLoadingLayout)
-        when (state) {
-            is LoadingState.SuccessCategoriesLoad -> {
-                loadingLayout?.visibility = View.GONE
-                (adapter as CategoryAdapter).setCategories(state.categories)
-            }
-            is LoadingState.Loading -> {
-                loadingLayout?.visibility = View.VISIBLE
-            }
-            else -> loadingLayout?.visibility = View.GONE
-        }
+    override fun showLoadedState(state: LoadingState) {
+        if (state is LoadingState.SuccessCategoriesLoad)
+            (adapter as CategoryAdapter).setCategories(state.categories)
     }
 
-    override fun onMovieClicked(movie: Movie) {
-        Bundle().let {
-            it.putInt("movieKey", movie.id)
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_categoryFragment_to_detailsFragment, it)
-        }
-    }
+    override fun toDetailsAction(): Int = R.id.action_categoryFragment_to_detailsFragment
 
     override fun onCategoryClicked(category: Category) {
         Bundle().let {

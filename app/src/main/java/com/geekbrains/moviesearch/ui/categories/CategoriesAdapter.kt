@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
+import com.geekbrains.moviesearch.ui.MoviesAdapter
 import com.geekbrains.moviesearch.ui.OnMovieItemClickListener
 import com.geekbrains.moviesearch.vo.Category
 
@@ -52,7 +52,7 @@ class CategoryAdapter(
             ).also { it.initialPrefetchItemCount = category.moviesInCategory.size }
             this.recyclerView.apply {
                 layoutManager = childLayoutManager
-                adapter = MovieRecyclerViewAdapter(
+                adapter = MoviesAdapter(
                     R.layout.movie_cardview_item,
                     clickListener
                 ).also { it.setMovies(category.moviesInCategory) }

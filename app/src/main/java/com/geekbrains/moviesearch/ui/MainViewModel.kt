@@ -26,9 +26,7 @@ open class MainViewModel(
             sleep(1000)
             responceLiveData.postValue(
                 LoadingState.SuccessMovieLoad(
-                    repository.getMovies(
-                        MovieListFilter.All
-                    )
+                    repository.getMovies(MovieListFilter.All)
                 )
             )
         }.start()

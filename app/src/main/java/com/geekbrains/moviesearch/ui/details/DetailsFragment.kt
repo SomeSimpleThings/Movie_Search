@@ -1,7 +1,9 @@
 package com.geekbrains.moviesearch.ui.details
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +15,9 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
-    private lateinit var viewModel: DetailsViewModel
+    private val viewModel: DetailsViewModel by lazy {
+        ViewModelProvider(this).get(DetailsViewModel::class.java)
+    }
     private var movie: Movie? = null
 
     override fun onCreateView(
@@ -32,7 +36,6 @@ class DetailsFragment : Fragment() {
             v.findNavController().navigateUp()
         }
         val key = arguments?.getInt("movieKey")
-        viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         viewModel.getById(key).observe(viewLifecycleOwner, {
             movie = it
             renderMovieInfo(it)
@@ -40,7 +43,7 @@ class DetailsFragment : Fragment() {
         details_fab.setOnClickListener {
             movie?.let {
                 it.favourite = !it.favourite
-                viewModel.singleUpdateMovie(it)
+                viewModel.updateMovie(it)
             }
         }
     }
@@ -61,9 +64,5 @@ class DetailsFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)?.supportActionBar?.show()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
     }
 }
