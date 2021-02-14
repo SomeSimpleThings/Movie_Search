@@ -4,15 +4,15 @@ import android.view.View
 import com.geekbrains.moviesearch.R
 import com.google.android.material.snackbar.Snackbar
 
-fun getFavDravableResource(fav: Boolean) = when (fav) {
-    true -> R.drawable.ic_baseline_favorite_24
-    false -> R.drawable.ic_baseline_favorite_border_24
-}
+fun getFavDravableResource(fav: Boolean) =
+    if (fav) R.drawable.ic_baseline_favorite_24
+    else R.drawable.ic_baseline_favorite_border_24
 
-fun getWatchlistDravableResource(watch: Boolean) = when (watch) {
-    true -> R.drawable.ic_baseline_playlist_add_check_24
-    false -> R.drawable.ic_baseline_playlist_add_24
-}
+
+fun getWatchlistDravableResource(watch: Boolean) =
+    if (watch) R.drawable.ic_baseline_playlist_add_check_24
+    else R.drawable.ic_baseline_playlist_add_24
+
 
 fun <T : View> T.show(): View {
     if (visibility != View.VISIBLE) {

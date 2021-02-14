@@ -68,7 +68,7 @@ abstract class BaseMovieFragment : Fragment(), OnMovieItemClickListener {
     }
 
     override fun onMovieClicked(movie: Movie) {
-        Bundle().let {
+        Bundle().also {
             it.putInt("movieKey", movie.id)
             NavHostFragment.findNavController(this)
                 .navigate(toDetailsAction(), it)

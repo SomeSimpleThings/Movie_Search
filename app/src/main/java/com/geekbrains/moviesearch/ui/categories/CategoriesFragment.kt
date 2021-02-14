@@ -47,7 +47,7 @@ class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
     override fun toDetailsAction(): Int = R.id.action_categoryFragment_to_detailsFragment
 
     override fun onCategoryClicked(category: Category) {
-        Bundle().let {
+        Bundle().also {
             it.putInt("categoryKey", category.id)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_categoryFragment_to_nav_home, it)
