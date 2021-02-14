@@ -1,0 +1,30 @@
+package com.geekbrains.moviesearch.ui.categories.category
+
+import com.geekbrains.moviesearch.data.LoadingState
+import com.geekbrains.moviesearch.ui.MainViewModel
+
+class CategoryViewModel(
+    private var currentCategoryId: Int? = null
+) : MainViewModel() {
+
+    override fun loadingImitation() {
+        Thread {
+            Thread.sleep(1000)
+            responceLiveData.postValue(
+                when (currentCategoryId) {
+                    null -> LoadingState.Loading
+                    else -> LoadingState.SuccessCategoryLoad(
+                        repository.getCategoryById(
+                            currentCategoryId!!
+                        )
+                    )
+                }
+            )
+        }.start()
+    }
+
+    fun postSelectedCategoryId(id: Int?) {
+        currentCategoryId = id
+        loadingImitation()
+    }
+}

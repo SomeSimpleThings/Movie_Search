@@ -1,39 +1,60 @@
 package com.geekbrains.moviesearch.data
 
+import com.geekbrains.moviesearch.vo.Category
 import com.geekbrains.moviesearch.vo.Movie
-import java.util.ArrayList
+import java.util.*
 
 
 object DummyContent {
 
-    val REMOTE_ITEMS: MutableList<Movie> = ArrayList()
-    var FAVOURITES_ITEMS: List<Movie> = REMOTE_ITEMS.filter { it.favourite }
-    var WATCH_ITEMS: List<Movie> = REMOTE_ITEMS.filter { it.inWatchList }
-    private const val COUNT = 25
+    val REMOTE_MOVIES: MutableList<Movie> = ArrayList()
+    val REMOTE_CATEGORIES: MutableList<Category> = ArrayList()
+    var FAVOURITES_MOVIES: List<Movie> = REMOTE_MOVIES.filter { it.favourite }
+    var WATCH_MOVIES: List<Movie> = REMOTE_MOVIES.filter { it.inWatchList }
+    private const val MOVIE_COUNT = 25
+    private const val CATEGORY_COUNT = 5
 
     init {
-        for (i in 1..COUNT) {
-            addItem(createDummyItem(i))
+        for (i in 1..MOVIE_COUNT) {
+            addMovieToRemote(createDummyMovieItem(i))
+        }
+
+        for (i in 1..CATEGORY_COUNT) {
+            addCategoryToRemote(createDummyCategoryItem(i))
         }
     }
 
-    private fun addItem(item: Movie) {
-        REMOTE_ITEMS.add(item)
-    }
+    private fun addMovieToRemote(item: Movie) = REMOTE_MOVIES.add(item)
+    private fun addCategoryToRemote(item: Category) = REMOTE_CATEGORIES.add(item)
 
-    private fun createDummyItem(position: Int): Movie {
-        return Movie(position, movieNames.random(), years.random(), ratings.random(), largeDesc)
-    }
+    private fun createDummyMovieItem(position: Int): Movie =
+        Movie(position, movieNames.random(), years.random(), ratings.random(), largeDesc)
 
-    fun getById(id: Int?): Movie? = REMOTE_ITEMS.firstOrNull { it.id == id }
+    private fun createDummyCategoryItem(position: Int): Category = Category(
+        position,
+        categories.random(),
+        REMOTE_MOVIES.filter { it.id >= position && it.id <= position * 5 })
+
+    fun getById(id: Int?): Movie? = REMOTE_MOVIES.firstOrNull { it.id == id }
+
     fun update() {
-        FAVOURITES_ITEMS = REMOTE_ITEMS.filter { it.favourite }
-        WATCH_ITEMS = REMOTE_ITEMS.filter { it.inWatchList }
+        FAVOURITES_MOVIES = REMOTE_MOVIES.filter { it.favourite }
+        WATCH_MOVIES = REMOTE_MOVIES.filter { it.inWatchList }
     }
+
+    fun getCategory(id: Int): Category = REMOTE_CATEGORIES.first { it.id == id }
 }
 
+val categories = listOf("Hot", "New", "Popular", "Recommended")
+
 val movieNames =
-    listOf("Bladerunner 2049", "Matrix", "Borat: the movie", "Harry potter and chamber of secrets")
+    listOf(
+        "Bladerunner 2049",
+        "Matrix",
+        "Borat: the movie",
+        "Harry potter and chamber of secrets",
+        "Appolo 11"
+    )
 val years = listOf("1985", "2020", "1993", "2005", "2011")
 val ratings = listOf("6.3", "7.1", "8.5", "8.9")
 

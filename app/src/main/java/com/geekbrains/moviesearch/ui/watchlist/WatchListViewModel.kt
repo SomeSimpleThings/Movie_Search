@@ -8,7 +8,7 @@ class WatchListViewModel : MainViewModel() {
 
     override fun loadingImitation() {
         Thread {
-            responceLiveData.postValue(LoadingState.Success(repository.getMovies(MovieListFilter.Watchlist)))
+            responceLiveData.postValue(LoadingState.SuccessMovieLoad(repository.getMovies(MovieListFilter.Watchlist)))
         }.start()
     }
 }

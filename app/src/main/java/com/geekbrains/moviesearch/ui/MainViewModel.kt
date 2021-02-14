@@ -15,7 +15,7 @@ open class MainViewModel(
 ) :
     ViewModel() {
 
-    fun getMovies() = run {
+    open fun getLoadedData() = run {
         responceLiveData.value = LoadingState.Loading
         loadingImitation()
         responceLiveData
@@ -24,7 +24,13 @@ open class MainViewModel(
     open fun loadingImitation() {
         Thread {
             sleep(1000)
-            responceLiveData.postValue(LoadingState.Success(repository.getMovies(MovieListFilter.All)))
+            responceLiveData.postValue(
+                LoadingState.SuccessMovieLoad(
+                    repository.getMovies(
+                        MovieListFilter.All
+                    )
+                )
+            )
         }.start()
     }
 
@@ -34,4 +40,6 @@ open class MainViewModel(
         }
         loadingImitation()
     }
+
+
 }

@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.ui.MainViewModel
-import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
 import com.geekbrains.moviesearch.vo.Movie
 
 
-class FavouritesFragment : BaseRecyclerFragment() {
+class FavouritesFragment : BaseMovieFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,6 @@ class FavouritesFragment : BaseRecyclerFragment() {
     override fun viewModel(): MainViewModel =
         ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
-    override fun recyclerItemLayoutId(): Int = R.layout.movie_cardview_item
 
     override fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager =
         GridLayoutManager(context, 3)
@@ -41,7 +40,7 @@ class FavouritesFragment : BaseRecyclerFragment() {
     override fun movieListFilter(): MovieListFilter = MovieListFilter.Favourites
 
 
-    override fun onItemClicked(movie: Movie) {
+    override fun onMovieClicked(movie: Movie) {
         Bundle().let {
             it.putInt("movieKey", movie.id)
             NavHostFragment.findNavController(this)

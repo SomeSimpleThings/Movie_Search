@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.ui.MainViewModel
-import com.geekbrains.moviesearch.ui.BaseRecyclerFragment
+import com.geekbrains.moviesearch.ui.BaseMovieFragment
+import com.geekbrains.moviesearch.ui.MovieRecyclerViewAdapter
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
 import com.geekbrains.moviesearch.vo.Movie
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
-class SearchFragment : BaseRecyclerFragment() {
+class SearchFragment : BaseMovieFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +44,12 @@ class SearchFragment : BaseRecyclerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter))
+        val itemTouchHelper =
+            ItemTouchHelper(SwipeToDeleteCallback(adapter as MovieRecyclerViewAdapter))
         itemTouchHelper.attachToRecyclerView(recycler_view as RecyclerView)
     }
 
-    override fun onItemClicked(movie: Movie) {
+    override fun onMovieClicked(movie: Movie) {
         Bundle().let {
             it.putInt("movieKey", movie.id)
             NavHostFragment.findNavController(this)
