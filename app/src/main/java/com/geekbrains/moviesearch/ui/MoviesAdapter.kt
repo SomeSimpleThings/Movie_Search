@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.vo.Movie
 
-class MovieRecyclerViewAdapter(
-    val layoutId: Int,
-    val itemClickListener: OnRecyclerItemClickListener,
-) : RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder>() {
+class MoviesAdapter(
+    private val layoutId: Int,
+    private val itemClickListener: OnMovieItemClickListener,
+) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var values: List<Movie> = mutableListOf()
 
@@ -57,16 +57,16 @@ class MovieRecyclerViewAdapter(
             favImageView.setImageResource(getFavDravableResource(favourite))
             favImageView.setOnClickListener {
                 favourite = !favourite
-                itemClickListener.onItemIconsClicked(this)
+                itemClickListener.onMovieIconsClicked(this)
             }
 
             watchImage.setImageResource(getWatchlistDravableResource(inWatchList))
             watchImage.setOnClickListener {
                 inWatchList = !inWatchList
-                itemClickListener.onItemIconsClicked(this)
+                itemClickListener.onMovieIconsClicked(this)
             }
             itemView.setOnClickListener {
-                itemClickListener.onItemClicked(this)
+                itemClickListener.onMovieClicked(this)
             }
         }
 
@@ -74,9 +74,9 @@ class MovieRecyclerViewAdapter(
 }
 
 
-interface OnRecyclerItemClickListener {
-    fun onItemClicked(movie: Movie)
-    fun onItemIconsClicked(movie: Movie)
+interface OnMovieItemClickListener {
+    fun onMovieClicked(movie: Movie)
+    fun onMovieIconsClicked(movie: Movie)
 }
 
 interface OnItemRemovedListener {

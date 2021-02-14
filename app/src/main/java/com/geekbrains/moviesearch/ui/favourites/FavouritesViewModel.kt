@@ -8,7 +8,7 @@ class FavouritesViewModel : MainViewModel() {
 
     override fun loadingImitation() {
         Thread {
-            responceLiveData.postValue(LoadingState.Success(repository.getMovies(MovieListFilter.Favourites)))
+            responceLiveData.postValue(LoadingState.SuccessMovieLoad(repository.getMovies(MovieListFilter.Favourites)))
         }.start()
     }
 

@@ -10,6 +10,8 @@
     <string name="nav_header_subtitle">user@yandex.ru</string>
     <string name="movie_description">Описание фильма</string>
     <string name="enter_movie_name_hint">Введите название</string>
-    <string name="about">О фильмк</string>
-    <string name="action_share">Share</string>
+    <string name="about">О фильме</string>
+    <string name="action_share">Поделиться</string>
+    <string name="category">Категория</string>
+    <string name="categories">Категории</string>
 </resources>

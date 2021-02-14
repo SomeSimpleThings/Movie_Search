@@ -36,4 +36,6 @@
     <string name="enter_movie_name_hint">Enter movie name</string>
     <string name="about">About</string>
     <string name="action_share">Share</string>
+    <string name="category">Category</string>
+    <string name="categories">Categories</string>
 </resources>

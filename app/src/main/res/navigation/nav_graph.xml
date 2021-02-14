@@ -3,12 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_category">
+
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="com.geekbrains.moviesearch.ui.categories.CategoriesFragment"
+        android:label="@string/categories"
+        tools:layout="@layout/fragment_category">
+        <argument
+            android:name="movieKey"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_categoryFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_categoryFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_nav_category_to_home"
+            app:destination="@id/home" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.geekbrains.moviesearch.ui.home.HomeFragment"
-        android:label="@string/home"
+        android:name="com.geekbrains.moviesearch.ui.categories.category.CategoryFragment"
         tools:layout="@layout/fragment_home">
         <argument
             android:name="movieKey"
@@ -16,8 +38,8 @@
         <action
             android:id="@+id/action_nav_home_to_detailsFragment"
             app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
@@ -31,8 +53,8 @@
         <action
             android:id="@+id/action_nav_search_to_detailsFragment"
             app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
@@ -46,8 +68,8 @@
         <action
             android:id="@+id/action_nav_favourites_to_detailsFragment"
             app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 
     <fragment
@@ -61,8 +83,8 @@
         <action
             android:id="@+id/action_nav_watchlist_to_detailsFragment"
             app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -74,4 +96,5 @@
         android:id="@+id/settingsActivity"
         android:name="com.geekbrains.moviesearch.ui.settings.SettingsActivity"
         android:label="SettingsActivity" />
+
 </navigation>

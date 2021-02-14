@@ -16,7 +16,7 @@ class DetailsViewModel(
         return selectedMovieLiveData
     }
 
-    fun singleUpdateMovie(movie: Movie) {
+    fun updateMovie(movie: Movie) {
         (repository as LocalRepositoryImpl).let {
             repository.update(movie)
             selectedMovieLiveData.postValue(repository.getMovieById(movie.id))
