@@ -1,6 +1,7 @@
 package com.geekbrains.moviesearch.ui
 
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import com.geekbrains.moviesearch.R
 import com.google.android.material.snackbar.Snackbar
 
@@ -68,4 +69,11 @@ fun <T : View> T.showSnackbar(
     length: Int = Snackbar.LENGTH_SHORT
 ) {
     Snackbar.make(this, text, length).show()
+}
+
+fun setGlobalNightMode(nightMode: Boolean) {
+    AppCompatDelegate.setDefaultNightMode(
+        if (nightMode) AppCompatDelegate.MODE_NIGHT_YES
+        else AppCompatDelegate.MODE_NIGHT_NO
+    )
 }

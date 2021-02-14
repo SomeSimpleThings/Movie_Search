@@ -1,9 +1,15 @@
 package com.geekbrains.moviesearch.ui.settings
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.ui.setGlobalNightMode
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -22,6 +28,23 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        }
+
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+
+            preferenceManager.findPreference<SwitchPreferenceCompat>(getString(R.string.pref_dark_theme))
+                ?.apply {
+                    onPreferenceChangeListener =
+                        Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+                            setGlobalNightMode(newValue as Boolean)
+                            true
+                        }
+                }
+            return super.onCreateView(inflater, container, savedInstanceState)
         }
     }
 }
