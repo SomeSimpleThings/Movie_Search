@@ -55,16 +55,17 @@ class MoviesAdapter(
         }
 
         fun bind(item: Movie) = with(item) {
-            yearView.text = releaseDate
+            yearView.text = releaseDateYear
             nameView.text = title
             rateView.text = voteAverage.toString()
-            Glide
-                .with(itemView.getContext())
-                .load(Api.getImageUrl(posterPath))
-                .centerCrop()
-                .placeholder(R.drawable.movie_card_foreground)
-                .into(posterImage);
-
+            posterPath?.let {
+                Glide
+                    .with(itemView.getContext())
+                    .load(Api.getImageUrl(posterPath))
+                    .centerCrop()
+                    .placeholder(R.drawable.movie_card_foreground)
+                    .into(posterImage)
+            }
             favImageView.setImageResource(getFavDravableResource(favourite))
             favImageView.setOnClickListener {
                 favourite = !favourite

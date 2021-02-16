@@ -68,12 +68,14 @@ class DetailsFragment : Fragment() {
         }
 
         context?.let {
-            Glide
-                .with(it)
-                .load(Api.getImageUrl(movie.posterPath))
-                .centerCrop()
-                .placeholder(R.drawable.movie_card_foreground)
-                .into(main_backdrop)
+            movie.posterPath?.apply {
+                Glide
+                    .with(it)
+                    .load(Api.getImageUrl(this))
+                    .centerCrop()
+                    .placeholder(R.drawable.movie_card_foreground)
+                    .into(main_backdrop)
+            }
         }
     }
 

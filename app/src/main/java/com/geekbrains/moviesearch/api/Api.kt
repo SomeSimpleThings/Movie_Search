@@ -21,8 +21,14 @@ class Api {
         fun getDiscoverUrl(page: Int = 1, apiKey: String = BuildConfig.TMDB_API_KEY) =
             "$TMDB_API_URL$TMDB_DISCOVER_MOVIE?api_key=$apiKey&language=ru-RU&page=&$page"
 
+        fun getMostPopularUrl(page: Int = 1, apiKey: String = BuildConfig.TMDB_API_KEY) =
+            "${getDiscoverUrl()}&sort_by=popularity.desc&vote_count.gte=500"
+
+        fun getMostRatedUrl(page: Int = 1, apiKey: String = BuildConfig.TMDB_API_KEY) =
+            "${getDiscoverUrl()}&sort_by=vote_average.desc&vote_count.gte=500"
+
         fun getTrendingUrl(page: Int = 1, apiKey: String = BuildConfig.TMDB_API_KEY) =
-            "$TMDB_API_URL$TMDB_TRENDING_TODAY?api_key=$apiKey&language=ru-RU&page=&$page"
+            "$TMDB_API_URL$TMDB_TRENDING_TODAY?api_key=$apiKey&language=ru-RU&page=$page"
 
         fun getMovieByIdUrl(id: Int, apiKey: String = BuildConfig.TMDB_API_KEY) =
             "$TMDB_API_URL$TMDB_MOVIE_BY_ID/$id?api_key=$apiKey&language=ru-RU"
@@ -34,6 +40,18 @@ class Api {
 
     fun getDiscoverPage(pageNum: Int = 1): Page? {
         return URL(getDiscoverUrl(pageNum)).getResponseText()?.let {
+            Gson().fromJson(it, Page::class.java)
+        }
+    }
+
+    fun getMostPopularPage(pageNum: Int = 1): Page? {
+        return URL(getMostPopularUrl(pageNum)).getResponseText()?.let {
+            Gson().fromJson(it, Page::class.java)
+        }
+    }
+
+    fun getMostRatedPage(pageNum: Int = 1): Page? {
+        return URL(getMostRatedUrl(pageNum)).getResponseText()?.let {
             Gson().fromJson(it, Page::class.java)
         }
     }
