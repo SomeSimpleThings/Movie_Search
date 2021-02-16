@@ -3,15 +3,14 @@ package com.geekbrains.moviesearch.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.geekbrains.moviesearch.data.LoadingState
-import com.geekbrains.moviesearch.data.LocalRepositoryImpl
 import com.geekbrains.moviesearch.data.MovieListFilter
+import com.geekbrains.moviesearch.data.RemoteRepositoryImpl
 import com.geekbrains.moviesearch.data.Repository
-import com.geekbrains.moviesearch.vo.Movie
-import java.lang.Thread.sleep
+import com.geekbrains.moviesearch.data.vo.Movie
 
 open class MainViewModel(
     protected val responceLiveData: MutableLiveData<LoadingState> = MutableLiveData(),
-    protected val repository: Repository = LocalRepositoryImpl()
+    protected val repository: Repository = RemoteRepositoryImpl()
 ) :
     ViewModel() {
 
@@ -23,7 +22,6 @@ open class MainViewModel(
 
     open fun loadingImitation() {
         Thread {
-            sleep(1000)
             responceLiveData.postValue(
                 LoadingState.SuccessMovieLoad(
                     repository.getMovies(MovieListFilter.All)
@@ -33,11 +31,9 @@ open class MainViewModel(
     }
 
     fun updateMovie(movie: Movie) {
-        (repository as LocalRepositoryImpl).let {
+        (repository as RemoteRepositoryImpl).let {
             repository.update(movie)
         }
         loadingImitation()
     }
-
-
 }

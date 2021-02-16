@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.vo.Movie
+import com.geekbrains.moviesearch.api.Api
+import com.geekbrains.moviesearch.data.vo.Movie
+
 
 class MoviesAdapter(
     private val layoutId: Int,
@@ -45,15 +48,23 @@ class MoviesAdapter(
         val rateView: TextView = view.findViewById(R.id.movie_rate)
         val favImageView: ImageView = view.findViewById(R.id.movie_fav_image)
         val watchImage: ImageView = view.findViewById(R.id.movie_watch_image)
+        val posterImage: ImageView = view.findViewById(R.id.movie_image)
 
         override fun toString(): String {
             return super.toString() + " '" + nameView.text + "'"
         }
 
         fun bind(item: Movie) = with(item) {
-            yearView.text = year
-            nameView.text = name
-            rateView.text = rating
+            yearView.text = releaseDate
+            nameView.text = title
+            rateView.text = voteAverage.toString()
+            Glide
+                .with(itemView.getContext())
+                .load(Api.getImageUrl(posterPath))
+                .centerCrop()
+                .placeholder(R.drawable.movie_card_foreground)
+                .into(posterImage);
+
             favImageView.setImageResource(getFavDravableResource(favourite))
             favImageView.setOnClickListener {
                 favourite = !favourite

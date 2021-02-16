@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.ui.MoviesAdapter
 import com.geekbrains.moviesearch.ui.OnMovieItemClickListener
-import com.geekbrains.moviesearch.vo.Category
+import com.geekbrains.moviesearch.data.vo.Category
 
 class CategoryAdapter(
     val categoryClickListener: OnCategoryClickListener,

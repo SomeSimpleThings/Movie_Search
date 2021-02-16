@@ -9,7 +9,6 @@ class CategoryViewModel(
 
     override fun loadingImitation() {
         Thread {
-            Thread.sleep(1000)
             responceLiveData.postValue(
                 when (currentCategoryId) {
                     -1 -> LoadingState.Loading

@@ -14,7 +14,6 @@ class CategoriesViewModel(
 
     override fun loadingImitation() {
         Thread {
-            Thread.sleep(1000)
             responceLiveData.postValue(LoadingState.SuccessCategoriesLoad(repository.getCategories()))
         }.start()
 
