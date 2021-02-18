@@ -20,7 +20,6 @@
             android:layout_marginTop="@dimen/dim_10"
             android:layout_marginBottom="@dimen/dim_10"
             android:contentDescription="@string/movie_description"
-            android:src="@drawable/poster_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

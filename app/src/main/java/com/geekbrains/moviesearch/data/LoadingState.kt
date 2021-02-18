@@ -1,7 +1,7 @@
 package com.geekbrains.moviesearch.data
 
-import com.geekbrains.moviesearch.vo.Category
-import com.geekbrains.moviesearch.vo.Movie
+import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.data.vo.Movie
 
 sealed class LoadingState {
     data class SuccessMovieLoad(val movies: List<Movie>) : LoadingState()

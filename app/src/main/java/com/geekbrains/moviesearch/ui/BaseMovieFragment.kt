@@ -1,5 +1,6 @@
 package com.geekbrains.moviesearch.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.geekbrains.moviesearch.MOVIE_INFO_KEY
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
-import com.geekbrains.moviesearch.vo.Movie
+import com.geekbrains.moviesearch.service.DummyMovieDetailsService
+import com.geekbrains.moviesearch.data.vo.Movie
 import kotlinx.android.synthetic.main.fragment_home.*
 
 abstract class BaseMovieFragment : Fragment(), OnMovieItemClickListener {
@@ -68,11 +71,20 @@ abstract class BaseMovieFragment : Fragment(), OnMovieItemClickListener {
     }
 
     override fun onMovieClicked(movie: Movie) {
-        Bundle().also {
-            it.putInt("movieKey", movie.id)
-            NavHostFragment.findNavController(this)
-                .navigate(toDetailsAction(), it)
+        NavHostFragment.findNavController(this)
+            .navigate(toDetailsAction())
+        context?.let {
+            val intent = Intent(it, DummyMovieDetailsService::class.java)
+            intent.putExtra(MOVIE_INFO_KEY, movie.id)
+            it.startService(intent)
         }
+
+//        Bundle().also {
+//            it.putInt("movieKey", movie.id)
+//            NavHostFragment.findNavController(this)
+//                .navigate(toDetailsAction(), it)
+//        }
+
     }
 
     open fun showLoadedState(state: LoadingState) {

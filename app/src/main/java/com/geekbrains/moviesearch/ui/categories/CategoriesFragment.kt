@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
-import com.geekbrains.moviesearch.vo.Category
+import com.geekbrains.moviesearch.data.vo.Category
 
 
 class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
