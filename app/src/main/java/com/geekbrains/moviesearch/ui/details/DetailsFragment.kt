@@ -1,9 +1,5 @@
 package com.geekbrains.moviesearch.ui.details
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
-import com.geekbrains.moviesearch.MOVIE_INFO_KEY
-import com.geekbrains.moviesearch.MOVIE_LOADED_FILTER
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.api.Api
 import com.geekbrains.moviesearch.data.vo.Movie
@@ -87,24 +81,5 @@ class DetailsFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)?.supportActionBar?.show()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context?.registerReceiver(receiver, IntentFilter(MOVIE_LOADED_FILTER))
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        context?.unregisterReceiver(receiver)
-    }
-
-    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            intent?.extras?.getSerializable(MOVIE_INFO_KEY).also {
-                renderMovieInfo(it as Movie)
-            }
-        }
     }
 }
