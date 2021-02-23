@@ -1,29 +1,24 @@
 package com.geekbrains.moviesearch.ui.categories.category
 
+import androidx.lifecycle.MutableLiveData
 import com.geekbrains.moviesearch.data.LoadingState
-import com.geekbrains.moviesearch.ui.MainViewModel
+import com.geekbrains.moviesearch.data.RepositoryImpl
+import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.ui.BaseViewModel
 
 class CategoryViewModel(
     private var currentCategoryId: Int = -1
-) : MainViewModel() {
+) : BaseViewModel<Category>() {
 
-    override fun loadingImitation() {
-        Thread {
-            responceLiveData.postValue(
-                when (currentCategoryId) {
-                    -1 -> LoadingState.Loading
-                    else -> {
-                        LoadingState.SuccessCategoryLoad(
-                            repository.getCategoryById(currentCategoryId)
-                        )
-                    }
-                }
-            )
-        }.start()
+    override fun getLoadedData(): MutableLiveData<LoadingState<Category>> {
+        return movieRepository.getCategoryById(currentCategoryId)
     }
 
     fun postSelectedCategoryId(id: Int) {
-        currentCategoryId = id
-        loadingImitation()
+        (movieRepository as RepositoryImpl).let {
+            movieRepository.updateCategory(id)
+        }
     }
 }
+
+

@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
-import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.ui.BaseMovieFragment
 
 
-class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
+class CategoriesFragment : BaseMovieFragment<List<Category>>(), OnCategoryClickListener {
 
     companion object {
         fun newInstance() = CategoriesFragment()
@@ -39,9 +39,9 @@ class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
         CategoryAdapter(this, this)
                 as RecyclerView.Adapter<RecyclerView.ViewHolder>
 
-    override fun showLoadedState(state: LoadingState) {
-        if (state is LoadingState.SuccessCategoriesLoad)
-            (adapter as CategoryAdapter).setCategories(state.categories)
+    fun showState(stateMovie: LoadingState<List<Category>>) {
+        if (stateMovie is LoadingState.Success)
+            (adapter as CategoryAdapter).setCategories(stateMovie.value)
     }
 
     override fun toDetailsAction(): Int = R.id.action_categoryFragment_to_detailsFragment
@@ -52,6 +52,11 @@ class CategoriesFragment : BaseMovieFragment(), OnCategoryClickListener {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_categoryFragment_to_nav_home, it)
         }
+    }
+
+    override fun showLoadedState(state: LoadingState<List<Category>>) {
+        if (state is LoadingState.Success)
+            (adapter as CategoryAdapter).setCategories(state.value)
     }
 
 }

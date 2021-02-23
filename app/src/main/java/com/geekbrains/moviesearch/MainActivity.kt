@@ -4,16 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.geekbrains.moviesearch.receiver.ConnectivityViewModel
 import com.geekbrains.moviesearch.ui.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -39,14 +36,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val connectivityViewModel = ViewModelProvider(this).get(ConnectivityViewModel::class.java)
-        connectivityViewModel.getNetworkStatus().observe(this, {
-            Toast.makeText(this, "network is $it", Toast.LENGTH_SHORT).show()
-        })
     }
 
     override fun onSupportNavigateUp(): Boolean {

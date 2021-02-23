@@ -14,13 +14,13 @@ import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.data.vo.Movie
 import kotlinx.android.synthetic.main.fragment_home.*
 
-abstract class BaseMovieFragment : Fragment(), OnMovieItemClickListener {
+abstract class BaseMovieFragment<T : Any> : Fragment(), OnMovieItemClickListener {
 
     protected val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder> by lazy {
         recyclerAdapter()
     }
-    protected val viewModel: MainViewModel by lazy {
-        viewModel() as MainViewModel
+    protected val viewModel: BaseViewModel<T> by lazy {
+        viewModel() as BaseViewModel<T>
     }
 
     override fun onCreateView(
@@ -74,10 +74,7 @@ abstract class BaseMovieFragment : Fragment(), OnMovieItemClickListener {
         }
     }
 
-    open fun showLoadedState(state: LoadingState) {
-        if (state is LoadingState.SuccessMovieLoad)
-            (adapter as MoviesAdapter).setMovies(state.movies)
-    }
+    abstract fun showLoadedState(state: LoadingState<T>)
 
     override fun onMovieIconsClicked(movie: Movie) {
         viewModel.updateMovie(movie)
