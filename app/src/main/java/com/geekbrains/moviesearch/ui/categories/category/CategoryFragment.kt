@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
+import com.geekbrains.moviesearch.data.vo.Category
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
-import com.geekbrains.moviesearch.ui.MainViewModel
+import com.geekbrains.moviesearch.ui.BaseViewModel
 import com.geekbrains.moviesearch.ui.MoviesAdapter
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 
-class CategoryFragment : BaseMovieFragment() {
+class CategoryFragment : BaseMovieFragment<Category>() {
 
     override fun fragmentViewProvider(
         inflater: LayoutInflater,
@@ -32,18 +33,17 @@ class CategoryFragment : BaseMovieFragment() {
         }
     }
 
-    override fun showLoadedState(state: LoadingState) {
-        if (state is LoadingState.SuccessCategoryLoad) {
-            activity?.toolbar?.title = state.category.name
-            (adapter as MoviesAdapter).setMovies(state.category.moviesInCategory)
-        }
-    }
-
-    override fun viewModel(): MainViewModel =
+    override fun viewModel(): BaseViewModel<Category> =
         ViewModelProvider(this).get(CategoryViewModel::class.java)
 
     override fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager =
         GridLayoutManager(context, 3)
 
     override fun toDetailsAction(): Int = R.id.action_nav_home_to_detailsFragment
+    override fun showLoadedState(state: LoadingState<Category>) {
+        if (state is LoadingState.Success) {
+            activity?.toolbar?.title = state.value.name
+            (adapter as MoviesAdapter).setMovies(state.value.moviesInCategory)
+        }
+    }
 }

@@ -2,20 +2,13 @@ package com.geekbrains.moviesearch.ui.categories
 
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.moviesearch.data.LoadingState
-import com.geekbrains.moviesearch.ui.MainViewModel
+import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.ui.BaseViewModel
 
 class CategoriesViewModel(
-) : MainViewModel() {
-    override fun getLoadedData(): MutableLiveData<LoadingState> = run {
-        responceLiveData.value = LoadingState.Loading
-        loadingImitation()
-        responceLiveData
-    }
+) : BaseViewModel<List<Category>>() {
 
-    override fun loadingImitation() {
-        Thread {
-            responceLiveData.postValue(LoadingState.SuccessCategoriesLoad(repository.getCategories()))
-        }.start()
-
+    override fun getLoadedData(): MutableLiveData<LoadingState<List<Category>>> {
+        return movieRepository.getCategories()
     }
 }

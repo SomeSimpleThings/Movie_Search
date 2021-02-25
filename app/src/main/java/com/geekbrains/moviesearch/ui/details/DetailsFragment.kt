@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.api.Api
+import com.geekbrains.moviesearch.data.LoadingState
+import com.geekbrains.moviesearch.data.remote.getImageUrl
 import com.geekbrains.moviesearch.data.vo.Movie
 import com.geekbrains.moviesearch.ui.getFavDravableResource
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -39,8 +40,10 @@ class DetailsFragment : Fragment() {
         }
         arguments?.getInt("movieKey")?.let {
             viewModel.getById(it).observe(viewLifecycleOwner, {
-                movie = it
-                renderMovieInfo(it)
+                if (it is LoadingState.Success) {
+                    movie = it.value
+                    renderMovieInfo(it.value)
+                }
             })
         }
 
@@ -65,7 +68,7 @@ class DetailsFragment : Fragment() {
             movie.posterPath?.apply {
                 Glide
                     .with(it)
-                    .load(Api.getImageUrl(this))
+                    .load(getImageUrl(this))
                     .centerCrop()
                     .placeholder(R.drawable.movie_card_foreground)
                     .into(main_backdrop)

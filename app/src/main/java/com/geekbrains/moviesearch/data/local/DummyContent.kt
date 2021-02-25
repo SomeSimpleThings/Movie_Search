@@ -1,4 +1,4 @@
-package com.geekbrains.moviesearch.data
+package com.geekbrains.moviesearch.data.local
 
 import com.geekbrains.moviesearch.data.vo.Category
 import com.geekbrains.moviesearch.data.vo.Movie
@@ -17,5 +17,6 @@ object DummyContent {
     }
 
     fun getCategory(id: Int): Category = REMOTE_CATEGORIES.first { it.id == id }
+    fun getMovie(id: Int): Movie = loadedMovies.first { it.id == id }
 }
 

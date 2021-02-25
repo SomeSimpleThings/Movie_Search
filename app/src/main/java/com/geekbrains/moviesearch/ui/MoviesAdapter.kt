@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.geekbrains.moviesearch.R
-import com.geekbrains.moviesearch.api.Api
+import com.geekbrains.moviesearch.data.remote.getImageUrl
 import com.geekbrains.moviesearch.data.vo.Movie
 
 
@@ -61,7 +61,7 @@ class MoviesAdapter(
             posterPath?.let {
                 Glide
                     .with(itemView.getContext())
-                    .load(Api.getImageUrl(posterPath))
+                    .load(getImageUrl(posterPath))
                     .centerCrop()
                     .placeholder(R.drawable.movie_card_foreground)
                     .into(posterImage)
