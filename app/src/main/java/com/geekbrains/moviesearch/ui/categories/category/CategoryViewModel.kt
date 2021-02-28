@@ -10,7 +10,7 @@ class CategoryViewModel(
     private var currentCategoryId: Int = -1
 ) : BaseViewModel<Category>() {
 
-    override fun getLoadedData(): MutableLiveData<LoadingState<Category>> {
+    override fun getLoadedData(showAdult: Boolean): MutableLiveData<LoadingState<Category>> {
         return movieRepository.getCategoryById(currentCategoryId)
     }
 

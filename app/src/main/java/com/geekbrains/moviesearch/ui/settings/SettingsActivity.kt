@@ -44,6 +44,17 @@ class SettingsActivity : AppCompatActivity() {
                             true
                         }
                 }
+
+            preferenceManager.findPreference<SwitchPreferenceCompat>(getString(R.string.pref_adult_key))
+                ?.apply {
+                    onPreferenceChangeListener =
+                        Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+                            sharedPreferences.edit()
+                                .putBoolean(getString(R.string.pref_adult_key), newValue as Boolean)
+                                .apply()
+                            true
+                        }
+                }
             return super.onCreateView(inflater, container, savedInstanceState)
         }
     }

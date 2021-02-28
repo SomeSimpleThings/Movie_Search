@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
@@ -40,6 +41,7 @@ abstract class BaseMovieFragment<T : Any> : Fragment(), OnMovieItemClickListener
     abstract fun recyclerLayoutManagerProvider(): RecyclerView.LayoutManager
     abstract fun toDetailsAction(): Int
 
+    var showAdult: Boolean = false
 
     open fun movieListFilter(): MovieListFilter = MovieListFilter.All
     open fun recyclerItemLayoutId(): Int = R.layout.movie_cardview_item
@@ -58,12 +60,18 @@ abstract class BaseMovieFragment<T : Any> : Fragment(), OnMovieItemClickListener
             it.layoutManager = recyclerLayoutManagerProvider()
             it.adapter = adapter
         }
-        viewModel.getLoadedData().observe(viewLifecycleOwner, { state ->
+        getShowAdultOption()
+        viewModel.getLoadedData(showAdult).observe(viewLifecycleOwner, { state ->
             activity?.findViewById<View>(R.id.mainFragmentLoadingLayout)?.showIf {
                 state is LoadingState.Loading
             }
             showLoadedState(state)
         })
+    }
+
+    private fun getShowAdultOption() {
+        showAdult = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+            .getBoolean(getString(R.string.pref_adult_key), false)
     }
 
     override fun onMovieClicked(movie: Movie) {

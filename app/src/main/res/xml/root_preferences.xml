@@ -7,4 +7,11 @@
             android:title="@string/prefs_switch_dark_title" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/content">
+        <SwitchPreferenceCompat
+            android:key="@string/pref_adult_key"
+            android:summary="@string/show_adult"
+            android:title="@string/prefs_show_adult_title" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -8,7 +8,7 @@ import com.geekbrains.moviesearch.ui.BaseViewModel
 class CategoriesViewModel(
 ) : BaseViewModel<List<Category>>() {
 
-    override fun getLoadedData(): MutableLiveData<LoadingState<List<Category>>> {
+    override fun getLoadedData(showAdult: Boolean): MutableLiveData<LoadingState<List<Category>>> {
         return movieRepository.getCategories()
     }
 }

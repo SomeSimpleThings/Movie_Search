@@ -2,6 +2,7 @@ package com.geekbrains.moviesearch.data
 
 import androidx.lifecycle.MutableLiveData
 import com.geekbrains.moviesearch.data.local.DummyContent
+import com.geekbrains.moviesearch.data.local.MovieDao
 import com.geekbrains.moviesearch.data.remote.TmdbApiService
 import com.geekbrains.moviesearch.data.vo.Category
 import com.geekbrains.moviesearch.data.vo.Movie
@@ -13,7 +14,11 @@ import retrofit2.Response
 
 interface MovieRepository {
 
-    fun getMovies(movieListFilter: MovieListFilter = MovieListFilter.All): MutableLiveData<LoadingState<List<Movie>>>
+    fun getMovies(
+        movieListFilter: MovieListFilter = MovieListFilter.All,
+        showAdult: Boolean
+    ): MutableLiveData<LoadingState<List<Movie>>>
+
     fun getMovieById(id: Int): MutableLiveData<LoadingState<Movie>>
 
     fun getCategories(): MutableLiveData<LoadingState<List<Category>>>
@@ -21,6 +26,7 @@ interface MovieRepository {
 }
 
 class RepositoryImpl(
+    private val localMoviesDao: MovieDao,
     val moviesLoadingState: MutableLiveData<LoadingState<List<Movie>>> = MutableLiveData(),
     val movieLoadingState: MutableLiveData<LoadingState<Movie>> = MutableLiveData(),
     val categoriesLoadingState: MutableLiveData<LoadingState<List<Category>>> = MutableLiveData(),
@@ -31,7 +37,10 @@ class RepositoryImpl(
         TmdbApiService.create()
     }
 
-    override fun getMovies(movieListFilter: MovieListFilter): MutableLiveData<LoadingState<List<Movie>>> {
+    override fun getMovies(
+        movieListFilter: MovieListFilter,
+        showAdult: Boolean
+    ): MutableLiveData<LoadingState<List<Movie>>> {
         moviesLoadingState.postValue(LoadingState.Loading)
         when (movieListFilter) {
             MovieListFilter.All -> {
@@ -43,8 +52,8 @@ class RepositoryImpl(
 
                         override fun onResponse(call: Call<Page>, response: Response<Page>) {
                             response.body()?.let {
-                                DummyContent.loadedMovies.addAll(it.movies)
-                                moviesLoadingState.postValue(LoadingState.Success(DummyContent.loadedMovies))
+                                localMoviesDao.insert(it.movies)
+                                moviesLoadingState.postValue(LoadingState.Success(localMoviesDao.allMovies()))
                             }
                         }
                     })
@@ -52,12 +61,12 @@ class RepositoryImpl(
             }
             MovieListFilter.Favourites -> moviesLoadingState.postValue(
                 LoadingState.Success(
-                    MovieListFilter.Favourites.list
+                    localMoviesDao.favouriteMovies()
                 )
             )
             MovieListFilter.Watchlist -> moviesLoadingState.postValue(
                 LoadingState.Success(
-                    MovieListFilter.Watchlist.list
+                    localMoviesDao.watchlistMovies()
                 )
             )
         }

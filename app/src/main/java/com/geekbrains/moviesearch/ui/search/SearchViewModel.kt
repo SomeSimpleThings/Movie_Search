@@ -7,7 +7,7 @@ import com.geekbrains.moviesearch.data.vo.Movie
 import com.geekbrains.moviesearch.ui.BaseViewModel
 
 class SearchViewModel : BaseViewModel<List<Movie>>() {
-    override fun getLoadedData(): MutableLiveData<LoadingState<List<Movie>>> {
-        return movieRepository.getMovies(MovieListFilter.All)
+    override fun getLoadedData(showAdult: Boolean): MutableLiveData<LoadingState<List<Movie>>> {
+        return movieRepository.getMovies(MovieListFilter.All,showAdult)
     }
 }

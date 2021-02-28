@@ -15,6 +15,7 @@ interface TmdbApiService {
     fun getDiscover(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "ru-RU",
+        @Query("include_adult") adult: Boolean = false,
         @Query("page") page: Int = 1
     ): Call<Page>
 
@@ -24,6 +25,7 @@ interface TmdbApiService {
         @Query("language") language: String = "ru-RU",
         @Query("sort_by") sortBy: String = "popularity.desc",
         @Query("vote_count.gte") voteCount: String = "500",
+        @Query("include_adult") adult: Boolean = false,
         @Query("page") page: Int = 1
     ): Call<Page>
 
