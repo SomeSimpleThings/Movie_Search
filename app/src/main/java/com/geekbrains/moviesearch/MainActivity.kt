@@ -5,25 +5,25 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.geekbrains.moviesearch.databinding.ActivityMainBinding
 import com.geekbrains.moviesearch.ui.settings.SettingsActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbarMain.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(
@@ -32,10 +32,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_search,
                 R.id.nav_favourites,
                 R.id.nav_watchlist
-            ), drawer_layout_main
+            ), binding.drawerLayoutMain
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        nav_view.setupWithNavController(navController)
+        binding.navView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

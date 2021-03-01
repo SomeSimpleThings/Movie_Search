@@ -12,13 +12,14 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.data.vo.Movie
+import com.geekbrains.moviesearch.databinding.FragmentSearchListBinding
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.ui.BaseViewModel
 import com.geekbrains.moviesearch.ui.MoviesAdapter
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
-import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class SearchFragment : BaseMovieFragment<List<Movie>>() {
+    private lateinit var binding: FragmentSearchListBinding
 
     override fun fragmentViewProvider(
         inflater: LayoutInflater,
@@ -40,9 +41,10 @@ class SearchFragment : BaseMovieFragment<List<Movie>>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSearchListBinding.bind(view)
         val itemTouchHelper =
             ItemTouchHelper(SwipeToDeleteCallback(adapter as MoviesAdapter))
-        itemTouchHelper.attachToRecyclerView(recycler_view as RecyclerView)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView.recyclerCategories)
     }
 
     override fun toDetailsAction(): Int = R.id.action_nav_search_to_detailsFragment

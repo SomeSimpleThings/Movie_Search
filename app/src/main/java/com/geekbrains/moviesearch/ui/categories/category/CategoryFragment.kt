@@ -13,7 +13,6 @@ import com.geekbrains.moviesearch.data.vo.CategoryWithMovies
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.ui.BaseViewModel
 import com.geekbrains.moviesearch.ui.MoviesAdapter
-import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class CategoryFragment : BaseMovieFragment<CategoryWithMovies>() {
@@ -42,7 +41,7 @@ class CategoryFragment : BaseMovieFragment<CategoryWithMovies>() {
     override fun toDetailsAction(): Int = R.id.action_nav_home_to_detailsFragment
     override fun showLoadedState(state: LoadingState<CategoryWithMovies>) {
         if (state is LoadingState.Success) {
-            activity?.toolbar?.title = state.value.category.name
+//            activity?. toolbar?.title = state.value.category.name
             (adapter as MoviesAdapter).setMovies(state.value.moviesInCategory)
         }
     }

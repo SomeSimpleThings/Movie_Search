@@ -13,7 +13,6 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.data.vo.Movie
-import kotlinx.android.synthetic.main.fragment_home.*
 
 abstract class BaseMovieFragment<T : Any> : Fragment(), OnMovieItemClickListener {
 
@@ -55,8 +54,7 @@ abstract class BaseMovieFragment<T : Any> : Fragment(), OnMovieItemClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler_view?.let {
-            it as RecyclerView
+        view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
             it.layoutManager = recyclerLayoutManagerProvider()
             it.adapter = adapter
         }
