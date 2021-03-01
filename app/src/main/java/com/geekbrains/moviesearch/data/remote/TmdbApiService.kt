@@ -2,6 +2,8 @@ package com.geekbrains.moviesearch.data.remote
 
 import com.geekbrains.moviesearch.data.vo.Movie
 import com.geekbrains.moviesearch.data.vo.Page
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -46,9 +48,18 @@ interface TmdbApiService {
 
     companion object Factory {
         fun create(): TmdbApiService = Retrofit.Builder()
+            .client(httpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(TMDB_API_URL)
             .build().create(TmdbApiService::class.java)
+
+        fun httpClient() = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor())
+            .build();
+
+        fun loggingInterceptor() = HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
     }
 }
 

@@ -36,8 +36,7 @@ data class Movie(
     @SerializedName("vote_count") val voteCount: Int?,
     var favourite: Boolean,
     var inWatchList: Boolean,
-    var categoryId: Long,
-    var note: String
+    var categoryId: Long
 ) : Serializable {
     val releaseDateYear: String?
         get() = releaseDate?.let {

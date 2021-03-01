@@ -70,12 +70,14 @@ class MoviesAdapter(
             favImageView.setOnClickListener {
                 favourite = !favourite
                 itemClickListener.onMovieIconsClicked(this)
+                favImageView.setImageResource(getFavDravableResource(favourite))
             }
 
             watchImage.setImageResource(getWatchlistDravableResource(inWatchList))
             watchImage.setOnClickListener {
                 inWatchList = !inWatchList
                 itemClickListener.onMovieIconsClicked(this)
+                watchImage.setImageResource(getWatchlistDravableResource(inWatchList))
             }
             itemView.setOnClickListener {
                 itemClickListener.onMovieClicked(this)
