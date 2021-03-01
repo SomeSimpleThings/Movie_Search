@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.ui.MoviesAdapter
 import com.geekbrains.moviesearch.ui.OnMovieItemClickListener
-import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.data.vo.CategoryWithMovies
 
 class CategoryAdapter(
     val categoryClickListener: OnCategoryClickListener,
@@ -18,7 +18,7 @@ class CategoryAdapter(
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     private val viewPool = RecyclerView.RecycledViewPool()
 
-    private var values: List<Category> = mutableListOf()
+    private var values: List<CategoryWithMovies> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -33,7 +33,7 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    fun setCategories(category: List<Category>) {
+    fun setCategories(category: List<CategoryWithMovies>) {
         values = category
         notifyDataSetChanged()
     }
@@ -42,29 +42,29 @@ class CategoryAdapter(
         val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_ic_category)
         val categoryNameText: TextView = view.findViewById(R.id.category_name)
 
-        fun bind(category: Category) {
-            categoryNameText.text = category.name
+        fun bind(categoryWithMovies: CategoryWithMovies) {
+            categoryNameText.text = categoryWithMovies.category.name
 
             val childLayoutManager = LinearLayoutManager(
                 itemView.context,
                 LinearLayoutManager.HORIZONTAL,
                 false
-            ).also { it.initialPrefetchItemCount = category.moviesInCategory.size }
+            ).also { it.initialPrefetchItemCount = categoryWithMovies.moviesInCategory.size }
             this.recyclerView.apply {
                 layoutManager = childLayoutManager
                 adapter = MoviesAdapter(
                     R.layout.movie_cardview_item,
                     clickListener
-                ).also { it.setMovies(category.moviesInCategory) }
+                ).also { it.setMovies(categoryWithMovies.moviesInCategory) }
                 setRecycledViewPool(viewPool)
             }
             itemView.setOnClickListener {
-                categoryClickListener.onCategoryClicked(category)
+                categoryClickListener.onCategoryClicked(categoryWithMovies)
             }
         }
     }
 }
 
 interface OnCategoryClickListener {
-    fun onCategoryClicked(category: Category)
+    fun onCategoryClicked(category: CategoryWithMovies)
 }

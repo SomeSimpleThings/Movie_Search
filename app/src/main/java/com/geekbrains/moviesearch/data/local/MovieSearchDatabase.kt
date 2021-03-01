@@ -2,14 +2,12 @@ package com.geekbrains.moviesearch.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.geekbrains.moviesearch.data.vo.BelongsToCollection
-import com.geekbrains.moviesearch.data.vo.Genre
-import com.geekbrains.moviesearch.data.vo.Movie
-import com.geekbrains.moviesearch.data.vo.ProductionCompany
+import com.geekbrains.moviesearch.data.vo.*
 
 @Database(
     entities = arrayOf(
         Movie::class,
+        Category::class,
         BelongsToCollection::class,
         Genre::class,
         ProductionCompany::class

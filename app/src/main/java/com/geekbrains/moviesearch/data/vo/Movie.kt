@@ -35,7 +35,9 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double?,
     @SerializedName("vote_count") val voteCount: Int?,
     var favourite: Boolean,
-    var inWatchList: Boolean
+    var inWatchList: Boolean,
+    var categoryId: Long,
+    var note: String
 ) : Serializable {
     val releaseDateYear: String?
         get() = releaseDate?.let {
@@ -45,24 +47,3 @@ data class Movie(
             }
         }
 }
-
-//@Entity
-//data class MovieEntity(
-//    @Embedded val movie: Movie,
-//    @Relation(
-//        parentColumn = "id",
-//        entityColumn = "id"
-//    )
-//    val productionCompanies: List<ProductionCompany>?,
-//    @Relation(
-//        parentColumn = "id",
-//        entityColumn = "id"
-//    )
-//    val productionCountries: List<ProductionCountry>?
-//
-//
-//) {
-//    @PrimaryKey(autoGenerate = true)
-//    var id: Int = 0
-//
-//}

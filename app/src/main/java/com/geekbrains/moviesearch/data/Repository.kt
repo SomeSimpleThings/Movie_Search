@@ -1,10 +1,10 @@
 package com.geekbrains.moviesearch.data
 
 import androidx.lifecycle.MutableLiveData
-import com.geekbrains.moviesearch.data.local.DummyContent
 import com.geekbrains.moviesearch.data.local.MovieDao
 import com.geekbrains.moviesearch.data.remote.TmdbApiService
 import com.geekbrains.moviesearch.data.vo.Category
+import com.geekbrains.moviesearch.data.vo.CategoryWithMovies
 import com.geekbrains.moviesearch.data.vo.Movie
 import com.geekbrains.moviesearch.data.vo.Page
 import retrofit2.Call
@@ -21,16 +21,16 @@ interface MovieRepository {
 
     fun getMovieById(id: Int): MutableLiveData<LoadingState<Movie>>
 
-    fun getCategories(): MutableLiveData<LoadingState<List<Category>>>
-    fun getCategoryById(id: Int): MutableLiveData<LoadingState<Category>>
+    fun getCategories(): MutableLiveData<LoadingState<List<CategoryWithMovies>>>
+    fun getCategoryById(id: Long): MutableLiveData<LoadingState<CategoryWithMovies>>
 }
 
 class RepositoryImpl(
     private val localMoviesDao: MovieDao,
     val moviesLoadingState: MutableLiveData<LoadingState<List<Movie>>> = MutableLiveData(),
     val movieLoadingState: MutableLiveData<LoadingState<Movie>> = MutableLiveData(),
-    val categoriesLoadingState: MutableLiveData<LoadingState<List<Category>>> = MutableLiveData(),
-    val categoryLoadingState: MutableLiveData<LoadingState<Category>> = MutableLiveData()
+    val categoriesLoadingState: MutableLiveData<LoadingState<List<CategoryWithMovies>>> = MutableLiveData(),
+    val categoryLoadingState: MutableLiveData<LoadingState<CategoryWithMovies>> = MutableLiveData()
 
 ) : MovieRepository {
     private val remoteApi: TmdbApiService by lazy {
@@ -44,7 +44,7 @@ class RepositoryImpl(
         moviesLoadingState.postValue(LoadingState.Loading)
         when (movieListFilter) {
             MovieListFilter.All -> {
-                if (MovieListFilter.All.list.isEmpty()) {
+                if (localMoviesDao.getAllMovies().isEmpty()) {
                     remoteApi.getDiscover().enqueue(object : Callback<Page> {
                         override fun onFailure(call: Call<Page>, t: Throwable) {
                             moviesLoadingState.postValue(LoadingState.Error(t))
@@ -52,12 +52,12 @@ class RepositoryImpl(
 
                         override fun onResponse(call: Call<Page>, response: Response<Page>) {
                             response.body()?.let {
-                                localMoviesDao.insert(it.movies)
-                                moviesLoadingState.postValue(LoadingState.Success(localMoviesDao.allMovies()))
+                                localMoviesDao.insertMovies(it.movies)
+                                moviesLoadingState.postValue(LoadingState.Success(localMoviesDao.getAllMovies()))
                             }
                         }
                     })
-                } else moviesLoadingState.postValue(LoadingState.Success(DummyContent.loadedMovies))
+                } else moviesLoadingState.postValue(LoadingState.Success(localMoviesDao.getAllMovies()))
             }
             MovieListFilter.Favourites -> moviesLoadingState.postValue(
                 LoadingState.Success(
@@ -76,7 +76,7 @@ class RepositoryImpl(
 
     override fun getMovieById(id: Int): MutableLiveData<LoadingState<Movie>> {
         movieLoadingState.postValue(LoadingState.Loading)
-        MovieListFilter.All.list.firstOrNull { id == it.id }?.let {
+        localMoviesDao.getMovieById(id)?.let {
             movieLoadingState.postValue(LoadingState.Success(it))
         } ?: remoteApi.getMovieById(id).enqueue(object : Callback<Movie> {
             override fun onFailure(call: Call<Movie>, t: Throwable) {
@@ -85,6 +85,7 @@ class RepositoryImpl(
 
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 response.body()?.let {
+                    localMoviesDao.insertMovie(it)
                     movieLoadingState.postValue(LoadingState.Success(it))
                 }
             }
@@ -93,9 +94,9 @@ class RepositoryImpl(
     }
 
     override fun getCategories()
-            : MutableLiveData<LoadingState<List<Category>>> {
+            : MutableLiveData<LoadingState<List<CategoryWithMovies>>> {
         categoriesLoadingState.postValue(LoadingState.Loading)
-        if (DummyContent.REMOTE_CATEGORIES.isEmpty()) {
+        if (localMoviesDao.getCategoriesWithMovies().isEmpty()) {
             remoteApi.getDiscoverSortedBy().enqueue(object : Callback<Page> {
                 override fun onFailure(call: Call<Page>, t: Throwable) {
                     categoriesLoadingState.postValue(LoadingState.Error(t))
@@ -103,9 +104,11 @@ class RepositoryImpl(
 
                 override fun onResponse(call: Call<Page>, response: Response<Page>) {
                     response.body()?.let {
-                        DummyContent.REMOTE_CATEGORIES.add(Category(1, "Most popular", it.movies))
+                        val categoryWithMovies =
+                            CategoryWithMovies(Category("Most popular"), it.movies)
+                        localMoviesDao.insertCategoryWithMovies(categoryWithMovies)
                         categoriesLoadingState.postValue(
-                            LoadingState.Success(DummyContent.REMOTE_CATEGORIES)
+                            LoadingState.Success(localMoviesDao.getCategoriesWithMovies())
                         )
                     }
                 }
@@ -118,9 +121,11 @@ class RepositoryImpl(
 
                     override fun onResponse(call: Call<Page>, response: Response<Page>) {
                         response.body()?.let {
-                            DummyContent.REMOTE_CATEGORIES.add(Category(2, "Most rated", it.movies))
+                            val categoryWithMovies =
+                                CategoryWithMovies(Category("Most rated"), it.movies)
+                            localMoviesDao.insertCategoryWithMovies(categoryWithMovies)
                             categoriesLoadingState.postValue(
-                                LoadingState.Success(DummyContent.REMOTE_CATEGORIES)
+                                LoadingState.Success(localMoviesDao.getCategoriesWithMovies())
                             )
                         }
                     }
@@ -132,40 +137,44 @@ class RepositoryImpl(
 
                 override fun onResponse(call: Call<Page>, response: Response<Page>) {
                     response.body()?.let {
-                        DummyContent.REMOTE_CATEGORIES.add(Category(3, "Trending", it.movies))
+                        val categoryWithMovies =
+                            CategoryWithMovies(Category("Trending"), it.movies)
+                        localMoviesDao.insertCategoryWithMovies(categoryWithMovies)
                         categoriesLoadingState.postValue(
-                            LoadingState.Success(DummyContent.REMOTE_CATEGORIES)
+                            LoadingState.Success(localMoviesDao.getCategoriesWithMovies())
                         )
                     }
                 }
             })
 
         } else categoriesLoadingState.postValue(
-            LoadingState.Success(DummyContent.REMOTE_CATEGORIES)
+            LoadingState.Success(localMoviesDao.getCategoriesWithMovies())
         )
         return categoriesLoadingState
     }
 
-    override fun getCategoryById(id: Int)
-            : MutableLiveData<LoadingState<Category>> {
-        if (id != -1) categoryLoadingState.postValue(
-            LoadingState.Success(
-                DummyContent.getCategory(
-                    id
+    override fun getCategoryById(id: Long)
+            : MutableLiveData<LoadingState<CategoryWithMovies>> {
+        if (id != -1L) {
+            localMoviesDao.getCategoryWithMoviesById(id)?.let {
+                categoryLoadingState.postValue(
+                    LoadingState.Success(it)
                 )
-            )
-        )
+            }
+        }
         return categoryLoadingState
     }
 
 
     fun updateMovie(movie: Movie) {
-        DummyContent.update(movie)
+        localMoviesDao.updateMovie(movie)
         movieLoadingState.postValue(LoadingState.Success(movie))
     }
 
-    fun updateCategory(id: Int) {
-        categoryLoadingState.postValue(LoadingState.Success(DummyContent.getCategory(id)))
+    fun updateCategory(id: Long) {
+        localMoviesDao.getCategoryWithMoviesById(id)?.let {
+            categoryLoadingState.postValue(LoadingState.Success(it))
+        }
     }
 }
 
@@ -173,12 +182,4 @@ sealed class MovieListFilter {
     object All : MovieListFilter()
     object Favourites : MovieListFilter()
     object Watchlist : MovieListFilter()
-
-
-    val list: List<Movie>
-        get() = when (this) {
-            is All -> DummyContent.loadedMovies
-            is Favourites -> DummyContent.favouritesMovies
-            is Watchlist -> DummyContent.watchMovies
-        }
 }
