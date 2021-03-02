@@ -20,4 +20,5 @@
     <string name="show_adult">Категории для взрослых</string>
     <string name="prefs_show_adult_title">Показывать фильмы для взрослых</string>
     <string name="content">Содержимое</string>
+    <string name="action_contacts">Contacts</string>
 </resources>

@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_nav_category_to_home"
             app:destination="@id/home" />
+        <action
+            android:id="@+id/action_nav_category_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
     </fragment>
 
     <fragment
@@ -96,5 +99,10 @@
         android:id="@+id/settingsActivity"
         android:name="com.geekbrains.moviesearch.ui.settings.SettingsActivity"
         android:label="SettingsActivity" />
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.geekbrains.moviesearch.ui.contacts.ContactsFragment"
+        android:label="fragment_contacts"
+        tools:layout="@layout/fragment_contacts" />
 
 </navigation>

@@ -55,6 +55,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
+
+            R.id.action_contacts -> {
+                findNavController(R.id.nav_host_fragment).navigate(R.id.action_nav_category_to_contactsFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
