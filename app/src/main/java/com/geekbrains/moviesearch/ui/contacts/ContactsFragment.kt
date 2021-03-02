@@ -71,8 +71,8 @@ class ContactsFragment : Fragment() {
                 } else {
                     context?.let {
                         AlertDialog.Builder(it)
-                            .setTitle("Доступ к контактам")
-                            .setMessage("Объяснение")
+                            .setTitle("Доступ к контактам ")
+                            .setMessage("нужен для звонка контакту ¯\\_(ツ)_/¯")
                             .setNegativeButton("Закрыть") { dialog, _ -> dialog.dismiss() }
                             .create()
                             .show()
