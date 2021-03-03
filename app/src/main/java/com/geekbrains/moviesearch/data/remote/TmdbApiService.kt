@@ -2,6 +2,8 @@ package com.geekbrains.moviesearch.data.remote
 
 import com.geekbrains.moviesearch.data.vo.Movie
 import com.geekbrains.moviesearch.data.vo.Page
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,6 +17,7 @@ interface TmdbApiService {
     fun getDiscover(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "ru-RU",
+        @Query("include_adult") adult: Boolean = false,
         @Query("page") page: Int = 1
     ): Call<Page>
 
@@ -24,6 +27,7 @@ interface TmdbApiService {
         @Query("language") language: String = "ru-RU",
         @Query("sort_by") sortBy: String = "popularity.desc",
         @Query("vote_count.gte") voteCount: String = "500",
+        @Query("include_adult") adult: Boolean = false,
         @Query("page") page: Int = 1
     ): Call<Page>
 
@@ -44,9 +48,18 @@ interface TmdbApiService {
 
     companion object Factory {
         fun create(): TmdbApiService = Retrofit.Builder()
+            .client(httpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(TMDB_API_URL)
             .build().create(TmdbApiService::class.java)
+
+        fun httpClient() = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor())
+            .build();
+
+        fun loggingInterceptor() = HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
     }
 }
 

@@ -17,4 +17,8 @@
     <string name="appearence">Внешний вид</string>
     <string name="prefs_switch_dark_summary">Переключиться на темную тему</string>
     <string name="prefs_switch_dark_title">Тема приложения</string>
+    <string name="show_adult">Категории для взрослых</string>
+    <string name="prefs_show_adult_title">Показывать фильмы для взрослых</string>
+    <string name="content">Содержимое</string>
+    <string name="action_contacts">Contacts</string>
 </resources>

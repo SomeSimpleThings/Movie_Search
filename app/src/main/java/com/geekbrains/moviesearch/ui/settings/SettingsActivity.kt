@@ -9,12 +9,16 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.geekbrains.moviesearch.R
+import com.geekbrains.moviesearch.databinding.SettingsActivityBinding
 import com.geekbrains.moviesearch.ui.setGlobalNightMode
 
 class SettingsActivity : AppCompatActivity() {
 
+    private lateinit var binding: SettingsActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = SettingsActivityBinding.inflate(layoutInflater)
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -41,6 +45,17 @@ class SettingsActivity : AppCompatActivity() {
                     onPreferenceChangeListener =
                         Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
                             setGlobalNightMode(newValue as Boolean)
+                            true
+                        }
+                }
+
+            preferenceManager.findPreference<SwitchPreferenceCompat>(getString(R.string.pref_adult_key))
+                ?.apply {
+                    onPreferenceChangeListener =
+                        Preference.OnPreferenceChangeListener { preference: Preference?, newValue: Any ->
+                            sharedPreferences.edit()
+                                .putBoolean(getString(R.string.pref_adult_key), newValue as Boolean)
+                                .apply()
                             true
                         }
                 }

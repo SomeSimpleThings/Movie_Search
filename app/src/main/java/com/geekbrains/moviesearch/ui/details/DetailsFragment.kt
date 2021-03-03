@@ -13,8 +13,8 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.remote.getImageUrl
 import com.geekbrains.moviesearch.data.vo.Movie
+import com.geekbrains.moviesearch.databinding.FragmentDetailsBinding
 import com.geekbrains.moviesearch.ui.getFavDravableResource
-import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
@@ -22,6 +22,8 @@ class DetailsFragment : Fragment() {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
     private var movie: Movie? = null
+
+    private lateinit var binding: FragmentDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +37,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar_details.setNavigationOnClickListener { v ->
+        binding = FragmentDetailsBinding.bind(view)
+        binding.toolbarDetails.setNavigationOnClickListener { v ->
             v.findNavController().navigateUp()
         }
         arguments?.getInt("movieKey")?.let {
@@ -47,7 +50,7 @@ class DetailsFragment : Fragment() {
             })
         }
 
-        details_fab.setOnClickListener {
+        binding.detailsFab.setOnClickListener {
             movie?.let {
                 it.favourite = !it.favourite
                 viewModel.updateMovie(it)
@@ -57,11 +60,11 @@ class DetailsFragment : Fragment() {
 
     private fun renderMovieInfo(movie: Movie) {
         with(movie) {
-            fragment_toolbarLayout.title = title
-            movie_year.text = releaseDate
-            movie_rate.text = voteAverage.toString()
-            movie_desc.text = overview
-            details_fab.setImageResource(getFavDravableResource(favourite))
+            binding.fragmentToolbarLayout.title = title
+            binding.movieYear.text = releaseDate
+            binding.movieRate.text = voteAverage.toString()
+            binding.movieDesc.text = overview
+            binding.detailsFab.setImageResource(getFavDravableResource(favourite))
         }
 
         context?.let {
@@ -71,7 +74,7 @@ class DetailsFragment : Fragment() {
                     .load(getImageUrl(this))
                     .centerCrop()
                     .placeholder(R.drawable.movie_card_foreground)
-                    .into(main_backdrop)
+                    .into(binding.mainBackdrop)
             }
         }
     }

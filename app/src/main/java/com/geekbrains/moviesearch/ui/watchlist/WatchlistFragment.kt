@@ -12,20 +12,23 @@ import com.geekbrains.moviesearch.R
 import com.geekbrains.moviesearch.data.LoadingState
 import com.geekbrains.moviesearch.data.MovieListFilter
 import com.geekbrains.moviesearch.data.vo.Movie
+import com.geekbrains.moviesearch.databinding.FragmentWatchlistBinding
 import com.geekbrains.moviesearch.ui.BaseMovieFragment
 import com.geekbrains.moviesearch.ui.BaseViewModel
 import com.geekbrains.moviesearch.ui.MoviesAdapter
 import com.geekbrains.moviesearch.ui.SwipeToDeleteCallback
-import kotlinx.android.synthetic.main.fragment_watchlist.*
 
 
 class WatchlistFragment : BaseMovieFragment<List<Movie>>() {
 
+    private lateinit var binding: FragmentWatchlistBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentWatchlistBinding.bind(view)
         val itemTouchHelper =
             ItemTouchHelper(SwipeToDeleteCallback(adapter as MoviesAdapter))
-        itemTouchHelper.attachToRecyclerView(recycler_view as RecyclerView)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView.recyclerCategories)
     }
 
     override fun fragmentViewProvider(

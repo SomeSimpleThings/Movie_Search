@@ -8,9 +8,9 @@ import com.geekbrains.moviesearch.ui.BaseViewModel
 
 class FavouritesViewModel : BaseViewModel<List<Movie>>() {
 
-    override fun getLoadedData(): MutableLiveData<LoadingState<List<Movie>>> {
+    override fun getLoadedData(showAdult: Boolean): MutableLiveData<LoadingState<List<Movie>>> {
         return movieRepository.getMovies(
-            MovieListFilter.Favourites
+            MovieListFilter.Favourites, showAdult
         )
     }
 }
