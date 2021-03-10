@@ -1,4 +1,4 @@
-package com.geekbrains.moviesearch.ui.contacts
+package com.geekbrains.moviesearch.ui.maps
 
 import android.Manifest
 import android.content.ContentResolver

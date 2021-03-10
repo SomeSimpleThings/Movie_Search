@@ -20,5 +20,16 @@
     <string name="show_adult">Категории для взрослых</string>
     <string name="prefs_show_adult_title">Показывать фильмы для взрослых</string>
     <string name="content">Содержимое</string>
-    <string name="action_contacts">Contacts</string>
+    <string name="action_contacts">Карты</string>
+    <string name="enter_city_name_hint">Введите город</string>
+    <string name="dialog_button_close">Закрыть</string>
+    <string name="dialog_title_no_gps">Нет разрешений</string>
+    <string name="dialog_message_no_gps">Разрешите чтобы увидеть координаты</string>
+    <string name="dialog_title_gps_turned_off">GPS Выключен</string>
+    <string name="dialog_message_last_location_unknown">Последнее местоположение неизвестно</string>
+    <string name="dialog_message_last_known_location">Последняя локация</string>
+    <string name="dialog_rationale_title">Разрешения необходимы</string>
+    <string name="dialog_rationale_meaasge">Увидеть ваши координаты</string>
+    <string name="dialog_rationale_give_access">предоставить</string>
+    <string name="dialog_rationale_decline">Отмена</string>
 </resources>

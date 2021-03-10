@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_nav_category_to_contactsFragment"
             app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_nav_category_to_mapWithSearchFragment"
+            app:destination="@id/mapWithSearchFragment" />
     </fragment>
 
     <fragment
@@ -101,8 +104,13 @@
         android:label="SettingsActivity" />
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.geekbrains.moviesearch.ui.contacts.ContactsFragment"
+        android:name="com.geekbrains.moviesearch.ui.maps.ContactsFragment"
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/mapWithSearchFragment"
+        android:name="com.geekbrains.moviesearch.ui.maps.MapWithSearchFragment"
+        android:label="fragment_map_with_search"
+        tools:layout="@layout/fragment_map_with_search" />
 
 </navigation>
