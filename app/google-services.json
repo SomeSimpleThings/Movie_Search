@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445140061602",
+    "project_id": "movie-search-54356",
+    "storage_bucket": "movie-search-54356.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445140061602:android:1d814fa4ca5aa9c9b636fb",
+        "android_client_info": {
+          "package_name": "com.geekbrains.moviesearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445140061602-hfuie9ldrbvrifuneo0ucblkgsj61ndp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_ycxtY8DDGcDB2ZETn9iipAnOfAYmmYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445140061602-hfuie9ldrbvrifuneo0ucblkgsj61ndp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

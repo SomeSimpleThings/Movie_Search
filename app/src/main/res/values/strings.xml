@@ -47,6 +47,16 @@
     <string name="show_adult">Show adult content</string>
     <string name="prefs_show_adult_title">Show adult movies</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="action_contacts">Contacts</string>
+    <string name="action_contacts">Maps</string>
+    <string name="enter_city_name_hint">Enter city</string>
+    <string name="dialog_button_close">Close</string>
+    <string name="dialog_title_no_gps">No GPS permissions granted</string>
+    <string name="dialog_message_no_gps">Grant to see choords</string>
+    <string name="dialog_title_gps_turned_off">GPS is off</string>
+    <string name="dialog_message_last_location_unknown">Last location unknown</string>
+    <string name="dialog_message_last_known_location">Last loc</string>
+    <string name="dialog_rationale_title">Perms is required</string>
+    <string name="dialog_rationale_meaasge">to see your chords</string>
+    <string name="dialog_rationale_give_access">give access</string>
+    <string name="dialog_rationale_decline">cancel</string>
 </resources>

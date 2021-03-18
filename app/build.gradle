@@ -2,6 +2,22 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+}
+
+def release_store_password
+def release_key_password
+def release_key_alias
+def keystoreProperties = new Properties()
+if (rootProject.file("keystore.properties").exists()) {
+    keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+    release_store_password = keystoreProperties['RELEASE_STORE_PASSWORD']
+    release_key_password = keystoreProperties['RELEASE_KEY_PASSWORD']
+    release_key_alias = keystoreProperties['RELEASE_KEY_ALIAS']
+} else {
+    release_store_password = System.env.RELEASE_STORE_PASSWORD
+    release_key_password = System.env.RELEASE_KEY_PASSWORD
+    release_key_alias = System.env.RELEASE_KEY_ALIAS
 }
 
 android {
@@ -11,6 +27,15 @@ android {
         properties.load(project.rootProject.file("api.keys").newDataInputStream())
         def tmdbApiKey = properties.getProperty("tmdb_api_key", "")
         it.buildConfigField "String", "TMDB_API_KEY", tmdbApiKey
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("ms.jks")
+            storePassword = release_store_password
+            keyAlias = release_key_alias
+            keyPassword = release_key_password
+        }
     }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -27,8 +52,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            versionNameSuffix "-debug"
         }
     }
     compileOptions {
@@ -41,6 +70,30 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+    flavorDimensions 'version'
+    productFlavors {
+        withMaps {
+            dimension 'version'
+            versionNameSuffix '.withMaps'
+        }
+
+        withoutMaps {
+            dimension 'version'
+            versionNameSuffix '.withoutMaps'
+        }
+    }
+    sourceSets {
+        withoutMaps {
+            java {
+                srcDirs 'src/withoutMaps/java'
+            }
+        }
+        withMaps {
+            java {
+                srcDirs 'src/withMaps/java'
+            }
+        }
     }
 }
 
@@ -79,6 +132,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor"
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
